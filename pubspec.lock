@@ -106,6 +106,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.10"
+  fading_edge_scrollview:
+    dependency: transitive
+    description:
+      name: fading_edge_scrollview
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -198,6 +205,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.2"
+  marquee:
+    dependency: "direct main"
+    description:
+      name: marquee
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.0"
   matcher:
     dependency: transitive
     description:

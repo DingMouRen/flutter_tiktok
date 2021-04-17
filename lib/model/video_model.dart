@@ -6,6 +6,7 @@ import 'comment_model.dart';
 class VideoModel{
   String title;//视频标题
   String author;//视频作者
+  String desc;//视频描述
   String authorHeaderUrl;//作者头像
   String videoUrl;//视频地址
   bool favorite;//是否收藏

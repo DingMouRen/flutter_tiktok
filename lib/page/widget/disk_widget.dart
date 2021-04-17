@@ -9,6 +9,10 @@ import 'package:flutter_tiktok/util/screen_utils.dart';
 
 /// Rotating vinyl disk with notes go out from its bottom
 class VinylDisk extends StatefulWidget {
+  String imgUrl;
+
+  VinylDisk(this.imgUrl);
+
   @override
   _VinylDiskState createState() => _VinylDiskState();
 }
@@ -24,10 +28,8 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
   final Random _random = Random();
   Path _path;
 
-  /// Initial sub path index
   int _pathIndex = 0;
-  final int _pathsQuantity =
-      4; // Results in 5 sub paths as we start creating from 0 index
+  final int _pathsQuantity = 4;
 
   final _vinylGradient = LinearGradient(
       colors: [
@@ -40,9 +42,6 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
       end: Alignment.topLeft,
       stops: [0.2, 0.6, 0.8, 1.0]);
 
-  /// Draw [quantity] sub paths and adds to the root path
-  /// [divider] is used to create curves that end both
-  /// at left side and top of the parent container.
   _drawPath({int quantity, int divider}) {
     final xOffset = screenAwareWidth(15.0, context);
     final yOffset = screenAwareHeight(15.0, context);
@@ -93,13 +92,13 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
     );
 
     _noteRotationController = AnimationController(
-        duration: Duration(milliseconds: 1000), vsync: this);
+        duration: Duration(milliseconds: 1000 ), vsync: this);
     _noteRotationTween = Tween(begin: -.05, end: .05);
     _noteRotationAnimation =
         _noteRotationTween.animate(_noteRotationController);
 
     _noteAndDiskController = AnimationController(
-        duration: Duration(milliseconds: 2000), vsync: this);
+        duration: Duration(milliseconds: 1000 * 2), vsync: this);
     _noteAndDiskAnimation =
         Tween(begin: 0.0, end: 1.0).animate(_noteAndDiskController)
           ..addStatusListener((status) {
@@ -143,14 +142,14 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
         AnimatedBuilder(
           animation: _noteAndDiskAnimation,
           builder: (_, child) => Positioned(
-            top: _calculatePosition(_noteAndDiskAnimation.value).dy,
+            top: _calculatePosition(_noteAndDiskAnimation.value).dy - kVinylDiskHeight / 3,
             left: _calculatePosition(_noteAndDiskAnimation.value).dx,
             child: RotationTransition(
               turns: _noteRotationAnimation,
               child: FadeTransition(
                 opacity: _noteOpacityAnimation,
                 child: Icon(Icons.music_note,
-                    color: Colors.grey, size: _noteAndDiskAnimation.value * 25),
+                    color: Colors.grey[200], size: _noteAndDiskAnimation.value * 25),
               ),
             ),
           ),
@@ -169,24 +168,33 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
                 shape: BoxShape.circle,
                 gradient: _vinylGradient,
               ),
-              child: CachedNetworkImage(
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    image: DecorationImage(image: imageProvider),
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(image: AssetImage(widget.imgUrl)),
                 ),
-                fit: BoxFit.cover,
-                imageUrl: kTestAvatarUrl,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+              ),),
             ),
           ),
-        ),
       ]),
+    );
+  }
+  //网络图片
+  _getImage() {
+    return CachedNetworkImage(
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          image: DecorationImage(image: imageProvider),
+        ),
+      ),
+      fit: BoxFit.fitWidth,
+      imageUrl: 'assets/images/header_holder.jpg',
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+          CircularProgressIndicator(value: downloadProgress.progress),
+      errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }
 }

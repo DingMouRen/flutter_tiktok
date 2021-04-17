@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/controller/video_widget_controller.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
+
+import 'disk_widget.dart';
 
 class VideoRightBarWidget extends StatefulWidget {
   VideoRightBarWidget({Key key}) : super(key: key);
@@ -31,6 +34,12 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
       child: Column(
         children: [
           _getHeader(),
+          SizedBox(height: 25,),
+          _getLikeButton(),
+          SizedBox(height: 20,),
+          _getCommentButton(),
+          SizedBox(height: 20,),
+          _getShareButton(),
         ],
       ),
     );
@@ -68,4 +77,61 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
       ),
     );
   }
+  //获取点赞按钮
+  _getLikeButton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        LikeButton(
+            size: 40,
+            circleColor:CircleColor(start: ColorRes.color_3,end: ColorRes.color_3),
+            likeBuilder: (isLike){
+              print('likeButton');
+              return isLike == true?Image.asset('assets/images/red_heart.webp'):Image.asset('assets/images/red_heart.webp',color: Colors.white,);
+            },
+            bubblesColor:const BubblesColor(dotPrimaryColor: ColorRes.color_3,dotSecondaryColor: ColorRes.color_3,dotThirdColor: ColorRes.color_3,dotLastColor: ColorRes.color_3,)
+        ),
+        SizedBox(height: 2,),
+        Text('188w',style: TextStyle(color: Colors.white),)
+      ],
+    );
+  }
+  //获取评论按钮
+  _getCommentButton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        IconButton(
+          iconSize: _widgetWidth,
+          padding:const EdgeInsets.all(0.0),
+          onPressed: (){
+            print('打开评论');
+          },
+          icon: Image.asset('assets/images/comment.webp',),
+        ),
+        Text('18w',style: TextStyle(color: Colors.white),)
+
+      ],
+    );
+  }
+
+  //获取分享按钮
+  _getShareButton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        IconButton(
+          iconSize: _widgetWidth,
+          padding:const EdgeInsets.all(0.0),
+          onPressed: (){
+            print('分享');
+          },
+          icon: Image.asset('assets/images/share_button.webp',width: 35,height: 35,),
+        ),
+        Text('18w',style: TextStyle(color: Colors.white),)
+
+      ],
+    );
+  }
+
 }

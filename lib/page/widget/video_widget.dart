@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/controller/video_widget_controller.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
+import 'package:flutter_tiktok/page/widget/video_bottom_bar_widget.dart';
 import 'package:flutter_tiktok/page/widget/video_right_bar_widget.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -54,9 +55,18 @@ class _VideoWidgetState extends State<VideoWidget> {
         ),
 
         Positioned(
-          right: 10,
-            bottom: 10,
+            right: 10,
+            bottom: 110,
             child: VideoRightBarWidget()),
+        Positioned(
+            right: 2,
+            bottom: 20,
+            child: VinylDisk(widget.videoModel.videoMusicImage)),
+        Positioned(
+          left: 12,
+          bottom: 20,
+          child: VideoBottomBarWidget(widget.videoModel),
+        )
         // _getRightLayout(),
         // _getBottomLayout() 走马灯Marquee
 
