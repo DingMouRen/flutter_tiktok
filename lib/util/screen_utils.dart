@@ -16,3 +16,12 @@ double screenAwareHeight(double height, BuildContext context) {
 double screenAwareWidth(double width, BuildContext context) {
   return width / baseWidth * MediaQuery.of(context).size.width;
 }
+
+double screenWidth(BuildContext context){
+  return MediaQuery.of(context).size.width;
+}
+
+
+double screenHeight(BuildContext context){
+  return MediaQuery.of(context).size.height;
+}

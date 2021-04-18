@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^2.4.1
   # 走马灯
   marquee: ^2.1.0
+  #
+  chewie: ^1.0.0
 
 dev_dependencies:
 

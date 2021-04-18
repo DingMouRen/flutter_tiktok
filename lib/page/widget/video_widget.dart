@@ -1,18 +1,23 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/controller/video_widget_controller.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/video_bottom_bar_widget.dart';
 import 'package:flutter_tiktok/page/widget/video_right_bar_widget.dart';
+import 'package:flutter_tiktok/util/screen_utils.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import 'disk_widget.dart';
 import 'like_gesture_widget.dart';
+
 ///视频播放列表组件
 // ignore: must_be_immutable
 class VideoWidget extends StatefulWidget {
   VideoModel videoModel;
-  VideoWidget({Key key,@required this.videoModel}) : super(key: key);
+
+  VideoWidget({Key key, @required this.videoModel}) : super(key: key);
 
   @override
   _VideoWidgetState createState() {
@@ -23,18 +28,26 @@ class VideoWidget extends StatefulWidget {
 class _VideoWidgetState extends State<VideoWidget> {
   VideoWidgetController _videoWidgetController = Get.put(VideoWidgetController());
   VideoPlayerController _videoPlayerController;
-  bool _playing = true;
+  MainPageScrollController mainController = Get.find();
+  // ChewieController _controller;
+  bool _playing = false;
+
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset(
-        widget.videoModel.videoUrl
-    )
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
-    _videoPlayerController.play();
+    _videoPlayerController = VideoPlayerController.asset(widget.videoModel.videoUrl);
+    _videoPlayerController.initialize();
+    _videoPlayerController.setLooping(true);
+    _playOrPause();
+    // _controller = ChewieController(
+    //   videoPlayerController: _videoPlayerController,
+    //   autoPlay: true,
+    //   looping: true,
+    //   fullScreenByDefault: true,
+    //   showControlsOnInitialize:false,
+    //   showControls: false,
+    //
+    // );
   }
 
   @override
@@ -48,8 +61,13 @@ class _VideoWidgetState extends State<VideoWidget> {
     return Stack(
       children: [
         LikeGestureWidget(
-          onSingleTap: (){
+          onSingleTap: () {
             _playOrPause();
+            print('宽:${_videoPlayerController.value.size.width} 高:${_videoPlayerController.value.size.height}');
+            print('视频宽高比:${_videoPlayerController.value.size.width/_videoPlayerController.value.size.height}');
+            print('videoContsoller aspectRatio:${_videoPlayerController.value.aspectRatio}');
+            print('屏幕宽:${screenWidth(context)}  高：${screenHeight(context)}');
+
           },
           child: _getVideoPlayer(),
         ),
@@ -67,43 +85,43 @@ class _VideoWidgetState extends State<VideoWidget> {
           bottom: 20,
           child: VideoBottomBarWidget(widget.videoModel),
         )
-        // _getRightLayout(),
-        // _getBottomLayout() 走马灯Marquee
 
 
       ],
     );
   }
 
-  void _playOrPause(){
+  void _playOrPause() {
     _playing = !_playing;
     _videoWidgetController.setPlayState(_playing);
-    if(_playing){
+    if (_playing) {
       _videoPlayerController.play();
-    }else{
+    } else {
       _videoPlayerController.pause();
     }
   }
 
+
   _getVideoPlayer() {
-    return Stack(
-      children: [
-        VideoPlayer(_videoPlayerController),
-        Obx(()=> _videoWidgetController.playing == true?
-        Container()
-            :Center(child: Image.asset('assets/images/pause.webp',width: 200,height: 200,),)),
-      ],
+    return  Stack(
+        children: [
+            OverflowBox(child: VideoPlayer(_videoPlayerController)),
+          Obx(()=> _videoWidgetController.playing == true? Container() : _getPauseButton()),
+        ],
     );
   }
 
-  //获取右边的布局
-  _getRightLayout() {
-
-  }
-
-  //获取底部的布局
-  _getBottomLayout() {
-
+  _getPauseButton() {
+    return Center(
+        child: Container(
+            width: 120,
+            height: 120,
+            child: Image.asset(
+              'assets/images/pause.webp',
+              fit: BoxFit.fill,
+            )
+        )
+    );
   }
 
 }

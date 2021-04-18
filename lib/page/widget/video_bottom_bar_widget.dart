@@ -37,7 +37,7 @@ class _VideoBottomBarWidgetState extends State<VideoBottomBarWidget> {
                 width: 200,
                 height: 25,
                 child: Marquee(
-                  text: "There  ",
+                  text: widget.videoModel.videoMusicName,
                   style: TextStyle(fontSize: 18,color: Colors.white),),
               )
             ],
