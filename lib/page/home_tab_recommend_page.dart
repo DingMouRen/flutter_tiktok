@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/controller/recommend_page_controller.dart';
+import 'package:flutter_tiktok/net/api.dart';
 import 'package:flutter_tiktok/page/widget/video_widget.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +19,13 @@ class HomeTabRecommendPage extends StatefulWidget {
 
 class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
   RecommendPageController _controller = Get.put(RecommendPageController());
+  MainPageScrollController _mainController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    //初始化右边用户信息
+    _mainController.setCurrentUserOfVideo(userModelList[0]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,10 @@ class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return VideoWidget(videoModel: _controller.videoList[index]);
-        }
+        },
+      onPageChanged: (index){
+        _mainController.setCurrentUserOfVideo(userModelList[index]);
+      },
     );
   }
 }

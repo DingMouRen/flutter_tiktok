@@ -12,6 +12,11 @@ import 'package:oktoast/oktoast.dart';
 
 ///首页
 class HomePage extends StatefulWidget {
+  PageController _scrollPageController;
+  HomePage({PageController pageController}){
+    this._scrollPageController = pageController;
+  }
+
   @override
   _HomePageState createState() {
     return _HomePageState();
@@ -29,13 +34,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    //设置状态栏的颜色和图标模式
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ColorRes.color_1,
-      statusBarIconBrightness: Brightness.light,
-    ));
-    _tabController = TabController(length: 3, vsync: this,initialIndex: _mainPageScrollController.indexTabBarHomePage.value);
-    _pageController = PageController(initialPage: _mainPageScrollController.indexTabBarHomePage.value,keepPage: true);
+
+    _tabController = TabController(length: 3, vsync: this,initialIndex:2);
+    _pageController = PageController(initialPage: 2,keepPage: true);
   }
 
   @override
@@ -48,6 +49,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    //设置状态栏的颜色和图标模式
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ColorRes.color_1,
+      statusBarIconBrightness: Brightness.light,
+    ));
+
     _screenHeight = MediaQuery.of(context).size.height;
     _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -129,10 +137,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         labelStyle: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
         controller: _tabController,
         onTap: (index){
-          _mainPageScrollController.selectIndexTabBarHomePage(index);
           _pageController.animateToPage(index, duration: Duration(milliseconds: 200), curve: Curves.linear);
-
         },
+
       ),
 
     );
@@ -146,18 +153,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         maxWidth: MediaQuery.of(context).size.width,
         maxHeight: _mainPageScrollController.videoViewHeight.value == 0.0?_screenHeight:_mainPageScrollController.videoViewHeight.value,
       ),
-      child: PageView(
-            controller: _pageController,
-            children: [
-              HomeTabCityPage(),
-              HomeTabFocusPage(),
-              HomeTabRecommendPage()
-            ],
-            physics: _mainPageScrollController.scrollPageViewHomePage.value?null:NeverScrollableScrollPhysics(),
-            onPageChanged: (index) {
-              _tabController.animateTo(index);
-              _mainPageScrollController.selectIndexTabBarHomePage(index);
-            }),
+      child: NotificationListener(
+        child: PageView(
+              controller: _pageController,
+              children: [
+                HomeTabCityPage(),
+                HomeTabFocusPage(),
+                HomeTabRecommendPage()
+              ],
+              onPageChanged: (index) {
+                _tabController.animateTo(index);
+              }),
+        onNotification: (overscroll){
+          if (overscroll is OverscrollNotification && overscroll.overscroll != 0 && overscroll.dragDetails != null) {
+            if(overscroll.overscroll > 0){
+              widget._scrollPageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
+            }else {
+
+            }
+          }
+          return true;
+        },
+      ),
     ),
     );
   }

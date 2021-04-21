@@ -4,10 +4,16 @@ import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 
+import '../../model/video_model.dart';
 import 'disk_widget.dart';
 
 class VideoRightBarWidget extends StatefulWidget {
-  VideoRightBarWidget({Key key}) : super(key: key);
+
+  final Function onClickComment;
+  final Function onClickShare;
+  VideoModel videoModel;
+  
+  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel}) : super(key: key);
 
   @override
   _VideoRightBarWidgetState createState() {
@@ -58,7 +64,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
               borderRadius: BorderRadius.circular(_widgetWidth/2),
               border: Border.fromBorderSide(BorderSide(color: Colors.white,width: 2)),
               image: DecorationImage(
-                image: AssetImage('assets/images/header_holder.jpg')
+                image: AssetImage(widget.videoModel.authorHeaderUrl)
               )
             ),
           ),
@@ -86,7 +92,6 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
             size: 40,
             circleColor:CircleColor(start: ColorRes.color_3,end: ColorRes.color_3),
             likeBuilder: (isLike){
-              print('likeButton');
               return isLike == true?Image.asset('assets/images/red_heart.webp'):Image.asset('assets/images/red_heart.webp',color: Colors.white,);
             },
             bubblesColor:const BubblesColor(dotPrimaryColor: ColorRes.color_3,dotSecondaryColor: ColorRes.color_3,dotThirdColor: ColorRes.color_3,dotLastColor: ColorRes.color_3,)
@@ -105,7 +110,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
           iconSize: _widgetWidth,
           padding:const EdgeInsets.all(0.0),
           onPressed: (){
-            print('打开评论');
+            widget.onClickComment?.call();
           },
           icon: Image.asset('assets/images/comment.webp',),
         ),
@@ -124,7 +129,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
           iconSize: _widgetWidth,
           padding:const EdgeInsets.all(0.0),
           onPressed: (){
-            print('分享');
+            widget.onClickShare?.call();
           },
           icon: Image.asset('assets/images/share_button.webp',width: 35,height: 35,),
         ),

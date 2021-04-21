@@ -5,4 +5,9 @@ class CommentModel{
   String commentContent;//评论内容
   bool commentLike;//评论是否点赞
   double commentLikeNumber;//评论点赞数量
+  String dateTime;//时间
+
+  CommentModel(this.commenterName, this.commenterHeaderUrl, this.commentContent,
+      this.commentLike, this.commentLikeNumber, this.dateTime);
+
 }

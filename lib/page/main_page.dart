@@ -9,6 +9,10 @@ import 'package:get/get.dart';
 
 class MainPage extends StatelessWidget {
   final MainPageScrollController mainPageController = Get.find();
+  PageController _scrollPageController;
+  MainPage({PageController pageController}){
+    this._scrollPageController = pageController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +26,13 @@ class MainPage extends StatelessWidget {
   _getBody() {
     switch(mainPageController.indexBottomBarMainPage.value){
       case 0:
-        return HomePage();
+        return HomePage(pageController:_scrollPageController);
       case 1:
         return FriendPage();
       case 2:
         return MessagePage();
       case 3:
-        return UserPage();
+        return UserPage(pageController:_scrollPageController,isLoginUser: true,);
     }
   }
 }

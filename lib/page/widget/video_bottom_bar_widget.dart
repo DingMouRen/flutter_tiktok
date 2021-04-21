@@ -28,7 +28,7 @@ class _VideoBottomBarWidgetState extends State<VideoBottomBarWidget> {
         children: [
           Text('@${widget.videoModel.author}',style: _getTextStyle(),),
           SizedBox(height: 8,),
-          Text('${widget.videoModel.desc}',style: _getTextStyle(),),
+          Text('${widget.videoModel.title}',style: _getTextStyle(),),
           SizedBox(height: 10,),
           Row(
             children: [
@@ -38,7 +38,7 @@ class _VideoBottomBarWidgetState extends State<VideoBottomBarWidget> {
                 height: 25,
                 child: Marquee(
                   text: widget.videoModel.videoMusicName,
-                  style: TextStyle(fontSize: 18,color: Colors.white),),
+                  style: TextStyle(fontSize: 15,color: Colors.white),),
               )
             ],
           ),

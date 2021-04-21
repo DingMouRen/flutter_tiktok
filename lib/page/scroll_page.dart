@@ -15,7 +15,7 @@ class ScrollPage extends StatefulWidget {
 
 class _ScrollPageState extends State<ScrollPage> {
   final MainPageScrollController mainPageScrollController = Get.put(MainPageScrollController());
-  PageController _pageController = PageController(initialPage: 0);
+  PageController _pageController = PageController(initialPage: 0,keepPage: true);
 
   @override
   void initState() {
@@ -24,24 +24,13 @@ class _ScrollPageState extends State<ScrollPage> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener(
-      child: Obx(
+    return Obx(
         () => PageView(
           controller: _pageController,
           physics: mainPageScrollController.scrollPageViewScrollPage.value ? null : NeverScrollableScrollPhysics(),
-          children: [MainPage(), UserPage()],
-          onPageChanged: (index) {
-            mainPageScrollController.selectIndexPageViewScrollPage(index);
-          },
+          children: [MainPage(pageController:_pageController), UserPage(pageController:_pageController,isLoginUser: false,)],
+
         ),
-      ),
-      onNotification: (scrollNotification) {
-        if (scrollNotification is UserScrollNotification &&
-            scrollNotification.direction != ScrollDirection.idle) {
-          mainPageScrollController.scrollDirectionChange(scrollNotification.direction);
-        }
-        return true;
-      },
     );
   }
 

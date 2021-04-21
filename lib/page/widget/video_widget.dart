@@ -2,13 +2,19 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/controller/video_widget_controller.dart';
+import 'package:flutter_tiktok/model/comment_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/video_bottom_bar_widget.dart';
+import 'package:flutter_tiktok/page/widget/video_comment_widget.dart';
 import 'package:flutter_tiktok/page/widget/video_right_bar_widget.dart';
+import 'package:flutter_tiktok/page/widget/video_share_widget.dart';
 import 'package:flutter_tiktok/util/screen_utils.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../res/colors.dart';
+import '../../util/screen_utils.dart';
+import '../../util/screen_utils.dart';
 import 'disk_widget.dart';
 import 'like_gesture_widget.dart';
 
@@ -75,7 +81,15 @@ class _VideoWidgetState extends State<VideoWidget> {
         Positioned(
             right: 10,
             bottom: 110,
-            child: VideoRightBarWidget()),
+            child: VideoRightBarWidget(
+              videoModel: widget.videoModel,
+              onClickComment: (){
+                showBottomComment();
+              },
+              onClickShare: (){
+                showBottomShare();
+              },
+            )),
         Positioned(
             right: 2,
             bottom: 20,
@@ -123,5 +137,36 @@ class _VideoWidgetState extends State<VideoWidget> {
         )
     );
   }
+
+  //展示评论
+  void showBottomComment() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true, //可滚动 解除showModalBottomSheet最大显示屏幕一半的限制
+        shape: RoundedRectangleBorder(borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),),
+        builder: (context){
+          return VideoCommentWidget(commentList:widget.videoModel.commentList);
+        });
+  }
+
+  //展示分享布局
+  void showBottomShare() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true, //可滚动 解除showModalBottomSheet最大显示屏幕一半的限制
+        shape: RoundedRectangleBorder(borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),),
+        backgroundColor: ColorRes.color_1,
+        builder: (context){
+          return VideoShareWidget();
+        });
+  }
+
+
 
 }
