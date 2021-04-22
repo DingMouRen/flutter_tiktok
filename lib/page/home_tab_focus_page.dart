@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/controller/focus_page_controller.dart';
+import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/page/widget/video_widget.dart';
+import 'package:get/get.dart';
+import 'package:flutter_tiktok/net/api.dart';
 ///首页tab关注
 class HomeTabFocusPage extends StatefulWidget {
 
@@ -9,10 +14,8 @@ class HomeTabFocusPage extends StatefulWidget {
 }
 
 class _HomeTabFocusPageState extends State<HomeTabFocusPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  FocusPageController _controller = Get.put(FocusPageController());
+  PageController _pageController = PageController(keepPage: true);
 
   @override
   void dispose() {
@@ -21,9 +24,15 @@ class _HomeTabFocusPageState extends State<HomeTabFocusPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(child: Text('关注'),),color: Colors.blue,);
+    return  PageView.builder(
+      controller: _pageController,
+      itemCount: _controller.videoList.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: false,);
+      },
+      onPageChanged: (index){
+      },
+    );
   }
 }

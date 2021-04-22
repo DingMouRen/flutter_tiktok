@@ -38,7 +38,6 @@ class _VideoCommentWidgetState extends State<VideoCommentWidget> {
                   ),
                 ),
                _getBottomLayout(),
-
               ],
       ),
     );

@@ -22,8 +22,8 @@ import 'like_gesture_widget.dart';
 // ignore: must_be_immutable
 class VideoWidget extends StatefulWidget {
   VideoModel videoModel;
-
-  VideoWidget({Key key, @required this.videoModel}) : super(key: key);
+  bool showFocusButton;
+  VideoWidget({Key key, @required this.videoModel,bool this.showFocusButton}) : super(key: key);
 
   @override
   _VideoWidgetState createState() {
@@ -83,6 +83,7 @@ class _VideoWidgetState extends State<VideoWidget> {
             bottom: 110,
             child: VideoRightBarWidget(
               videoModel: widget.videoModel,
+              showFocusButton: widget.showFocusButton,
               onClickComment: (){
                 showBottomComment();
               },
@@ -128,8 +129,8 @@ class _VideoWidgetState extends State<VideoWidget> {
   _getPauseButton() {
     return Center(
         child: Container(
-            width: 120,
-            height: 120,
+            width: 100,
+            height: 100,
             child: Image.asset(
               'assets/images/pause.webp',
               fit: BoxFit.fill,

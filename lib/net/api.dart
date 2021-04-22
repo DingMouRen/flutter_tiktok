@@ -1,3 +1,5 @@
+import 'package:flutter_tiktok/model/city_item_model.dart';
+import 'package:flutter_tiktok/model/message_model.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 
@@ -5,7 +7,7 @@ import '../model/comment_model.dart';
 
 class Api{
 
-
+  //获取推荐页面的视频列表
   static List<VideoModel> getRecommendVideoList(){
     List<VideoModel> list = [];
     for(int i = 0;i < 6;i ++){
@@ -26,8 +28,68 @@ class Api{
     return list;
   }
 
+  //获取朋友页面的视频列表
+  static List<VideoModel> getFriendVideoList(){
+    List<VideoModel> list = [];
+    for(int i = 0;i < 6;i ++){
+      VideoModel videoModel = VideoModel();
+      videoModel.title = videoTitleList[i];
+      videoModel.author = authorList[i];
+      videoModel.authorHeaderUrl = authorHeaderUrlList[i];
+      videoModel.videoUrl = videoUrlList[i];
+      videoModel.favorite = false;
+      videoModel.like = false;
+      videoModel.likeNumber = '266${i}w';
+      videoModel.commentList = commentList;
+      videoModel.shareNumber = '18${i}w';
+      videoModel.videoMusicImage = videoMusicImageList[i];
+      videoModel.videoMusicName = videoMusicNameList[i];
+      list.add(videoModel);
+    }
+    return list;
+  }
+
+  //获取关注页面的视频列表
+  static List<VideoModel> getFocusVideoList(){
+    List<VideoModel> list = [];
+    for(int i = 0;i < 6;i ++){
+      VideoModel videoModel = VideoModel();
+      videoModel.title = videoTitleList[i];
+      videoModel.author = authorList[i];
+      videoModel.authorHeaderUrl = authorHeaderUrlList[i];
+      videoModel.videoUrl = videoUrlList[i];
+      videoModel.favorite = false;
+      videoModel.like = false;
+      videoModel.likeNumber = '266${i}w';
+      videoModel.commentList = commentList;
+      videoModel.shareNumber = '18${i}w';
+      videoModel.videoMusicImage = videoMusicImageList[i];
+      videoModel.videoMusicName = videoMusicNameList[i];
+      list.add(videoModel);
+    }
+    return list;
+  }
+
+  //获取城市页面的视频列表
+  static List<CityItemModel> getCityVideoList(){
+    List<CityItemModel> list = [];
+    for(int i = 0;i < 6;i ++){
+      CityItemModel cityItemModel = CityItemModel();
+      cityItemModel.user = userModelList[i];
+      cityItemModel.imgCoverUrl = gifList[i];
+      cityItemModel.distance = '0.8${i}km';
+      list.add(cityItemModel);
+    }
+    return list;
+  }
+
+
 
 }
+
+
+
+
 
 List<UserModel> userModelList = List.generate(6, (i) {
   UserModel userModel = UserModel();
@@ -193,3 +255,12 @@ List<String> introductionList = [
   '心里装着希望\n全力以赴\n才能不负自己',
   '现在付出更多的努力\n未来才会有更多的选择',
 ];
+
+//消息列表
+List<MessageModel> messageList = List.generate(20, (index) {
+  MessageModel model = MessageModel();
+  model.imgUrl = videoMusicImageList[index%6];
+  model.title = authorList[index%6];
+  model.desc = index%2 == 0?'一条小团团赞了你的作品 · 6:12':'[发布了新作品] · 06-06';
+  return model;
+});

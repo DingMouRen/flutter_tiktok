@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/controller/user_page_controller.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/user_info_widget.dart';
 import 'package:flutter_tiktok/page/widget/user_item_grid_widget.dart';
+import 'package:flutter_tiktok/page/widget/user_more_bottom_sheet.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -25,25 +27,21 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
   MainPageScrollController _mainController = Get.find();
+  UserPageController _userPageController = Get.find();
   TabController _tabController;
   PageController _pageController = PageController(keepPage: true);
   ScrollController _scrollController = ScrollController();
-  bool showTitle = false;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _scrollController.addListener(() {
       double position =_scrollController.offset;
-      print('offset:${position}');
+      bool showTitle = _userPageController.showTitle.value;
       if(position >  145 && !showTitle){
-        setState(() {
-          showTitle = true;
-        });
+        _userPageController.setShowTitle(true);
       }else if(position <  145 && showTitle){
-        setState(() {
-          showTitle = false;
-        });
+        _userPageController.setShowTitle(false);
       }
     });
   }
@@ -58,11 +56,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    //设置状态栏的颜色和图标模式
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-    ));
+
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
@@ -90,16 +84,15 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
         icon: Icon(Icons.arrow_back_ios_rounded,color: Colors.white,),
       ),
       actions: [
-        widget._isLoginUser?
-            IconButton(
-              onPressed: (){
-              },
-              icon: Icon(Icons.view_headline_rounded,color: Colors.white,),
-            )
-            : IconButton(
-              onPressed: (){
-              },
-            icon: Icon(Icons.more_horiz_rounded,color: Colors.white,),
+         IconButton(
+           onPressed: (){
+              if( widget._isLoginUser){
+                _userPageController.toggleRightMenu();
+              }else{
+                _showMore();
+              }
+             },
+            icon: Icon( widget._isLoginUser?Icons.menu:Icons.more_horiz_rounded,color: Colors.white,),
         ),
       ],
       elevation: 0,
@@ -107,7 +100,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: [StretchMode.zoomBackground],
         collapseMode: CollapseMode.parallax,
-        title: showTitle?Text(_mainController.userModelCurrent.value.name):null,
+        title: Obx(()=> Text(_userPageController.showTitle.value?_mainController.userModelCurrent.value.name:'')),
         centerTitle:true,
         background: Image.asset(
           _mainController.userModelCurrent.value.headerBgImage,
@@ -216,6 +209,19 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
               },
           ),
     );
+  }
+
+  void _showMore() {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: false, //可滚动 解除showModalBottomSheet最大显示屏幕一半的限制
+        shape: RoundedRectangleBorder(borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),),
+        builder: (context){
+          return UserMoreBottomSheet();
+        });
   }
 
 

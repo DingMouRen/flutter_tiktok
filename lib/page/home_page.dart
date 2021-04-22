@@ -50,12 +50,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    //设置状态栏的颜色和图标模式
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ColorRes.color_1,
-      statusBarIconBrightness: Brightness.light,
-    ));
-
     _screenHeight = MediaQuery.of(context).size.height;
     _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -125,7 +119,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       alignment: Alignment.center,
       child: TabBar(
         tabs: [
-          Text('滨江'),
+          Text('杭州'),
           Text('关注'),
           Text('推荐'),
         ],

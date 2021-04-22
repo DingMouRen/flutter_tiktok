@@ -12,8 +12,8 @@ class VideoRightBarWidget extends StatefulWidget {
   final Function onClickComment;
   final Function onClickShare;
   VideoModel videoModel;
-  
-  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel}) : super(key: key);
+  bool showFocusButton;
+  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel,this.showFocusButton}) : super(key: key);
 
   @override
   _VideoRightBarWidgetState createState() {
@@ -68,6 +68,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
               )
             ),
           ),
+          widget.showFocusButton == true?
           Positioned(
               child: Container(
                 width: _widgetWidth/8*3,
@@ -78,7 +79,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
                   color: ColorRes.color_3,
                 ),
                 child: Icon(Icons.add,color: Colors.white,size: 15,),
-              )),
+              )):SizedBox(width: 0,height: 0,),
         ],
       ),
     );

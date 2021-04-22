@@ -20,6 +20,7 @@ class HomeTabRecommendPage extends StatefulWidget {
 class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
   RecommendPageController _controller = Get.put(RecommendPageController());
   MainPageScrollController _mainController = Get.find();
+  PageController _pageController = PageController(keepPage: true);
   @override
   void initState() {
     super.initState();
@@ -28,12 +29,17 @@ class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return  PageView.builder(
+        controller: _pageController,
         itemCount: _controller.videoList.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          return VideoWidget(videoModel: _controller.videoList[index]);
+          return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: true,);
         },
       onPageChanged: (index){
         _mainController.setCurrentUserOfVideo(userModelList[index]);

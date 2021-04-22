@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/page/friend_page.dart';
 import 'package:flutter_tiktok/page/home_page.dart';
 import 'package:flutter_tiktok/page/message_page.dart';
 import 'package:flutter_tiktok/page/user_page.dart';
 import 'package:flutter_tiktok/page/widget/main_page_bottom_bar_widget.dart';
+import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 
 class MainPage extends StatelessWidget {
@@ -16,6 +18,11 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //设置状态栏的颜色和图标模式
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ColorRes.color_1,
+      statusBarIconBrightness: Brightness.light,
+    ));
     return Scaffold(
       body: Obx(()=>_getBody()),
       //底部导航

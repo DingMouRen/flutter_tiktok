@@ -12,7 +12,6 @@ void main() {
       //隐藏Flutter项目右上角的debug标签
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-       // backgroundColor: ColorRes.color_1
       ),
       defaultTransition: Transition.rightToLeft,
       getPages: RouterManager.routes,

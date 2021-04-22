@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/res/colors.dart';
@@ -42,7 +43,7 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
   _getLayoutBottomBar(){
     return Container(
       key: bottomBarKey,
-      color: ColorRes.color_1,
+      color:Colors.black,
       child: Row(
         children: [
           Expanded(
@@ -79,6 +80,7 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
     return TextButton(
         onPressed: (){
           mainPageScrollController.selectIndexBottomBarMainPage(index);
+          setSystemStatusBarStyle(index);
         },
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -91,4 +93,23 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
         )
     );
   }
+
+  void setSystemStatusBarStyle(int index) {
+    if(index == 3 ){
+      //设置状态栏的颜色和图标模式
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ));
+
+    }else{
+      //设置状态栏的颜色和图标模式
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ColorRes.color_1,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    }
+
+  }
+
 }
