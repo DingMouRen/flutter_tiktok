@@ -23,25 +23,34 @@ class _HomeTabCityPageState extends State<HomeTabCityPage> {
     return Scaffold(
       body: Container(
         color: ColorRes.color_1,
-        child: GridView.builder(
-          itemCount: list.length,
-            physics: BouncingScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 1,
-              crossAxisSpacing: 1,
-              childAspectRatio: 9/16,
-            ),
-            itemBuilder: (context,index){
-              return CityGridItemWidget(
-                model: list[index],
-                onTap: (){
+        child: Stack(
+          children: [
+            SizedBox(height: 40,),
+            Container(
+              margin: EdgeInsets.only(top: 40),
+              child: GridView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: list.length,
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 1,
+                  childAspectRatio: 9/16,
+                ),
+                itemBuilder: (context,index){
+                  return CityGridItemWidget(
+                    model: list[index],
+                    onTap: (){
 
+                    },
+                  );
                 },
-              );
-            },
-        ),
+              ),
+            ),
+          ],
+        )
       ),
     );
   }

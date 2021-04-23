@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:flutter_tiktok/net/api.dart';
 ///首页tab关注
 class HomeTabFocusPage extends StatefulWidget {
+  PageController pageController;
+
+  HomeTabFocusPage({this.pageController});
 
   @override
   _HomeTabFocusPageState createState() {
@@ -20,6 +23,7 @@ class _HomeTabFocusPageState extends State<HomeTabFocusPage> {
   @override
   void dispose() {
     super.dispose();
+    _pageController.dispose();
   }
 
   @override
@@ -29,7 +33,13 @@ class _HomeTabFocusPageState extends State<HomeTabFocusPage> {
       itemCount: _controller.videoList.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: false,);
+        return VideoWidget(
+          videoModel: _controller.videoList[index],
+          showFocusButton: false,
+          onClickHeader: (){
+            widget.pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
+          },
+        );
       },
       onPageChanged: (index){
       },

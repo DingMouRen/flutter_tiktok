@@ -9,6 +9,7 @@ import 'package:flutter_tiktok/page/scroll_page.dart';
 import 'package:flutter_tiktok/page/shoot_page.dart';
 import 'package:flutter_tiktok/page/test.dart';
 import 'package:flutter_tiktok/page/user_page.dart';
+import 'package:flutter_tiktok/page/video_list_page.dart';
 import 'package:get/get.dart';
 
 ///路由管理者
@@ -24,6 +25,7 @@ class RouterManager{
     GetPage(name: Routers.homeTabCity, page: () => HomeTabCityPage()),
     GetPage(name: Routers.homeTabFocus, page: () => HomeTabFocusPage()),
     GetPage(name: Routers.homeTabRecommend, page: () => HomeTabRecommendPage()),
+    GetPage(name: Routers.videoList, page: () => VideoListPage()),
   ];
 
 
@@ -41,4 +43,5 @@ class Routers{
   static final String homeTabCity = '/homeTabCity';
   static final String homeTabFocus = '/homeTabFocus';
   static final String homeTabRecommend = '/homeTabRecommend';
+  static final String videoList = '/videoList';
 }

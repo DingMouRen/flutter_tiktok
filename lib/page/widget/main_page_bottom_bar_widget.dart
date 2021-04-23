@@ -44,6 +44,7 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
     return Container(
       key: bottomBarKey,
       color:Colors.black,
+      height: 48,
       child: Row(
         children: [
           Expanded(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/net/api.dart';
 import 'package:flutter_tiktok/page/friend_page.dart';
 import 'package:flutter_tiktok/page/home_page.dart';
 import 'package:flutter_tiktok/page/message_page.dart';
@@ -39,7 +40,11 @@ class MainPage extends StatelessWidget {
       case 2:
         return MessagePage();
       case 3:
-        return UserPage(pageController:_scrollPageController,isLoginUser: true,);
+        return UserPage(
+          pageController:_scrollPageController,
+          isLoginUser: true,
+          userModel: loginUserModel,
+        );
     }
   }
 }

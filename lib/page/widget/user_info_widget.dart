@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 ///用户信息
 class UserInfoWidget extends StatefulWidget {
   bool isLoginUser;
-  UserInfoWidget(this.isLoginUser);
+  UserModel userModel;
+  UserInfoWidget({this.isLoginUser,this.userModel});
 
   @override
   _UserInfoWidgetState createState() {
@@ -14,7 +16,6 @@ class UserInfoWidget extends StatefulWidget {
 }
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
-  MainPageScrollController _mainController = Get.find();
   double _widgetHeight = 300;
   bool focus = false;
   @override
@@ -71,7 +72,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
               borderRadius: BorderRadius.circular(50),
               border: Border.fromBorderSide(BorderSide(color: ColorRes.color_1,width: 2)),
               image: DecorationImage(
-                  image: AssetImage(_mainController.userModelCurrent.value.headerImg)
+                  image: AssetImage(widget.userModel.headerImg)
               )
           ),
         ),
@@ -127,16 +128,16 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10,),
-          Text(_mainController.userModelCurrent.value.name,
+          Text(widget.userModel.name,
             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),),
           SizedBox(height: 5,),
-          Text('抖音号：${_mainController.userModelCurrent.value.douYinNumber}',
+          Text('抖音号：${widget.userModel.douYinNumber}',
             style: TextStyle(color: ColorRes.color_2,fontSize: 12),
           ),
           SizedBox(height: 10,),
           Divider(color: Colors.grey.withAlpha(100),height: 0.05,),
           SizedBox(height: 10,),
-          Text(_mainController.userModelCurrent.value.introduction,
+          Text(widget.userModel.introduction,
             style: TextStyle(color: Colors.white,fontSize: 14),),
           SizedBox(height: 5,),
           _getSexCity(),
@@ -161,7 +162,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(_mainController.userModelCurrent.value.male?'assets/images/male.webp':'assets/images/famale.webp',
+              Image.asset(widget.userModel.male?'assets/images/male.webp':'assets/images/famale.webp',
                 width: 10,
                 height: 10,
               ),
@@ -179,7 +180,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
             color: ColorRes.color_2.withAlpha(50),
             borderRadius: BorderRadius.circular(2),
           ),
-          child:  Text(_mainController.userModelCurrent.value.city,
+          child:  Text(widget.userModel.city,
             style: TextStyle(color: Colors.grey,fontSize: 10),),
         ),
       ],
@@ -189,19 +190,19 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   _getNumberLayout() {
     return  Row(
         children: [
-          Text(_mainController.userModelCurrent.value.likeTotalNumber,
+          Text(widget.userModel.likeTotalNumber,
             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
           SizedBox(width: 2,),
           Text('获赞',
             style: TextStyle(color: ColorRes.color_2,fontSize: 13),),
           SizedBox(width: 15,),
-          Text(_mainController.userModelCurrent.value.focusNumber,
+          Text(widget.userModel.focusNumber,
             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
           SizedBox(width: 2,),
           Text('关注',
             style: TextStyle(color: ColorRes.color_2,fontSize: 13),),
           SizedBox(width: 15,),
-          Text(_mainController.userModelCurrent.value.fansNumber,
+          Text(widget.userModel.fansNumber,
             style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
           SizedBox(width: 2,),
           Text('粉丝',

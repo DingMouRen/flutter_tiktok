@@ -142,18 +142,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
 
   _getContent() {
-    return Obx(()=>ConstrainedBox(
+    double contentHeight = MediaQuery.of(context).size.height - 48 - MediaQueryData.fromWindow(window).padding.top;
+    return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width,
-        maxHeight: _mainPageScrollController.videoViewHeight.value == 0.0?_screenHeight:_mainPageScrollController.videoViewHeight.value,
+        maxHeight: contentHeight,
       ),
       child: NotificationListener(
         child: PageView(
               controller: _pageController,
               children: [
                 HomeTabCityPage(),
-                HomeTabFocusPage(),
-                HomeTabRecommendPage()
+                HomeTabFocusPage(pageController: widget._scrollPageController,),
+                HomeTabRecommendPage(
+                  contentHeight: contentHeight,
+                  pageController: widget._scrollPageController,
+                )
               ],
               onPageChanged: (index) {
                 _tabController.animateTo(index);
@@ -169,7 +173,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return true;
         },
       ),
-    ),
     );
   }
 

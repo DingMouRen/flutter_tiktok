@@ -126,6 +126,25 @@ List<UserModel> userModelList = List.generate(6, (i) {
   return userModel;
 });
 
+UserModel loginUserModel = UserModel(
+  name: '钉某人',
+  loginUser: true,
+  headerBgImage: 'assets/images/bg_1.jpg',
+  headerImg: 'assets/images/header_holder.jpg',
+  douYinNumber: '19423900',
+  introduction: 'Flutter小战士\nGithub:https://github.com/DingMouRen\n简书:https://www.jianshu.com/u/4abd568623a2\nB站:搜索[码农钉某人]',
+  male: true,
+  city: '杭州',
+  likeTotalNumber: '66w',
+  focusNumber: '66w',
+  fansNumber: '888',
+  worksVideo: videoModelList,
+  likeVideo: videoModelList,
+  likeVideoGif: gifList,
+  worksVideoGif: gifList
+
+);
+
 List<VideoModel> videoModelList = List.generate(6, (i) {
   VideoModel videoModel = VideoModel();
   videoModel.title = videoTitleList[i];
@@ -203,7 +222,7 @@ List<String> videoUrlList = [
   'assets/video/video_2.mp4',
   'assets/video/video_3.mp4',
   'assets/video/video_4.mp4',
-  'assets/video/video_6.mp4',
+  'assets/video/video_5.mp4',
 ];
 
 //本地视频对应得gif

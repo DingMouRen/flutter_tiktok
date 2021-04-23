@@ -11,9 +11,10 @@ class VideoRightBarWidget extends StatefulWidget {
 
   final Function onClickComment;
   final Function onClickShare;
+  final Function onClickHeader;
   VideoModel videoModel;
   bool showFocusButton;
-  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel,this.showFocusButton}) : super(key: key);
+  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel,this.showFocusButton,this.onClickHeader}) : super(key: key);
 
   @override
   _VideoRightBarWidgetState createState() {
@@ -52,35 +53,40 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
   }
   //头像
   _getHeader() {
-    return Container(
-      width: _widgetWidth,
-      height: _widgetWidth + _widgetWidth/8*3/2,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: _widgetWidth/8*3/2),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(_widgetWidth/2),
-              border: Border.fromBorderSide(BorderSide(color: Colors.white,width: 2)),
-              image: DecorationImage(
-                image: AssetImage(widget.videoModel.authorHeaderUrl)
-              )
+    return InkWell(
+      onTap: (){
+        widget.onClickHeader?.call();
+      },
+      child: Container(
+        width: _widgetWidth,
+        height: _widgetWidth + _widgetWidth/8*3/2,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: _widgetWidth/8*3/2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(_widgetWidth/2),
+                border: Border.fromBorderSide(BorderSide(color: Colors.white,width: 2)),
+                image: DecorationImage(
+                  image: AssetImage(widget.videoModel.authorHeaderUrl)
+                )
+              ),
             ),
-          ),
-          widget.showFocusButton == true?
-          Positioned(
-              child: Container(
-                width: _widgetWidth/8*3,
-                height: _widgetWidth/8*3,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(_widgetWidth/8*3/2),
-                  color: ColorRes.color_3,
-                ),
-                child: Icon(Icons.add,color: Colors.white,size: 15,),
-              )):SizedBox(width: 0,height: 0,),
-        ],
+            widget.showFocusButton == true?
+            Positioned(
+                child: Container(
+                  width: _widgetWidth/8*3,
+                  height: _widgetWidth/8*3,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(_widgetWidth/8*3/2),
+                    color: ColorRes.color_3,
+                  ),
+                  child: Icon(Icons.add,color: Colors.white,size: 15,),
+                )):SizedBox(width: 0,height: 0,),
+          ],
+        ),
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/controller/user_page_controller.dart';
+import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
+import 'package:flutter_tiktok/page/video_list_page.dart';
 import 'package:flutter_tiktok/page/widget/user_info_widget.dart';
 import 'package:flutter_tiktok/page/widget/user_item_grid_widget.dart';
 import 'package:flutter_tiktok/page/widget/user_more_bottom_sheet.dart';
@@ -14,9 +17,11 @@ import 'package:oktoast/oktoast.dart';
 class UserPage extends StatefulWidget {
   PageController _scrollPageController;
   bool _isLoginUser;
-  UserPage({PageController pageController,bool isLoginUser}){
+  UserModel userModel;
+  UserPage({PageController pageController,bool isLoginUser,UserModel userModel}){
     this._scrollPageController = pageController;
     this._isLoginUser = isLoginUser;
+    this.userModel = userModel;
   }
 
   @override
@@ -31,9 +36,15 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
   TabController _tabController;
   PageController _pageController = PageController(keepPage: true);
   ScrollController _scrollController = ScrollController();
+  UserModel _userModel;
   @override
   void initState() {
     super.initState();
+    if(null == widget.userModel){
+      _userModel = _mainController.userModelCurrent.value;
+    }else{
+      _userModel = widget.userModel;
+    }
     _tabController = TabController(length: 2, vsync: this);
     _scrollController.addListener(() {
       double position =_scrollController.offset;
@@ -100,10 +111,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: [StretchMode.zoomBackground],
         collapseMode: CollapseMode.parallax,
-        title: Obx(()=> Text(_userPageController.showTitle.value?_mainController.userModelCurrent.value.name:'')),
+        title: Obx(()=> Text(_userPageController.showTitle.value?_userModel.name:'')),
         centerTitle:true,
         background: Image.asset(
-          _mainController.userModelCurrent.value.headerBgImage,
+          _userModel.headerBgImage,
           fit: BoxFit.cover,
         ),
       ),
@@ -117,7 +128,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
   _getSliverUserInfo() {
     return SliverToBoxAdapter(
-      child: UserInfoWidget(widget._isLoginUser),
+      child: UserInfoWidget(
+        isLoginUser: widget._isLoginUser,
+        userModel: _userModel,
+      ),
     );
   }
 
@@ -136,10 +150,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
               unselectedLabelStyle:TextStyle(fontSize: 15,color: Colors.grey),
               tabs: <Widget>[
                 Tab(
-                  child: Text('作品 ${_mainController.userModelCurrent.value.worksVideo.length}',),
+                  child: Text('作品 ${_userModel.worksVideo.length}',),
                 ),
                 Tab(
-                  child: Text('喜欢 ${_mainController.userModelCurrent.value.likeVideo.length}',
+                  child: Text('喜欢 ${_userModel.likeVideo.length}',
                   ),
                 ),
               ],
@@ -163,7 +177,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width,
           minWidth: MediaQuery.of(context).size.width,
-          maxHeight:itemHeight * _mainController.userModelCurrent.value.worksVideo.length / 3,
+          maxHeight:itemHeight * _userModel.worksVideo.length / 3,
         ),
         child:  PageView.builder(
               controller: _pageController,
@@ -181,7 +195,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
   //获取PageView的煤业
   Widget _getPageLayout(int index) {
-    List<String> gifList = index == 0? _mainController.userModelCurrent.value.worksVideoGif:_mainController.userModelCurrent.value.likeVideoGif;
+    List<String> gifList = index == 0? _userModel.worksVideoGif:_userModel.likeVideoGif;
     return Container(
       color: ColorRes.color_1,
       child: GridView.builder(
@@ -203,7 +217,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                 return UserItemGridWidget(
                   url: gifList[index],
                   onTap: (){
-                    showToast('点击了$index');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => VideoListPage(videoList: _userModel.worksVideo,)));
                   },
                 );
               },

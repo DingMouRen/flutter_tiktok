@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 
 ///首页tab推荐
 class HomeTabRecommendPage extends StatefulWidget {
-  HomeTabRecommendPage({Key key}) : super(key: key);
+  double contentHeight;
+  PageController pageController;
+  HomeTabRecommendPage({Key key,this.contentHeight,this.pageController}) : super(key: key);
 
   @override
   _HomeTabRecommendPageState createState() {
@@ -31,6 +33,7 @@ class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
   @override
   void dispose() {
     super.dispose();
+    _pageController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,14 @@ class _HomeTabRecommendPageState extends State<HomeTabRecommendPage> {
         itemCount: _controller.videoList.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: true,);
+          return VideoWidget(
+            videoModel: _controller.videoList[index],
+            showFocusButton: true,
+            contentHeight: widget.contentHeight,
+            onClickHeader: (){
+              widget.pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
+            },
+          );
         },
       onPageChanged: (index){
         _mainController.setCurrentUserOfVideo(userModelList[index]);

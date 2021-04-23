@@ -31,7 +31,11 @@ class UserModel{
       this.focusNumber,
       this.fansNumber,
       this.worksVideo,
-      this.likeVideo});
+      this.likeVideo,
+      this.headerImg,
+      this.worksVideoGif,
+      this.likeVideoGif
+  });
 
 
 }

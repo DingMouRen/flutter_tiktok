@@ -23,7 +23,9 @@ import 'like_gesture_widget.dart';
 class VideoWidget extends StatefulWidget {
   VideoModel videoModel;
   bool showFocusButton;
-  VideoWidget({Key key, @required this.videoModel,bool this.showFocusButton}) : super(key: key);
+  double contentHeight;
+  Function onClickHeader;
+  VideoWidget({Key key, @required this.videoModel,bool this.showFocusButton,this.contentHeight,this.onClickHeader}) : super(key: key);
 
   @override
   _VideoWidgetState createState() {
@@ -35,7 +37,6 @@ class _VideoWidgetState extends State<VideoWidget> {
   VideoWidgetController _videoWidgetController = Get.put(VideoWidgetController());
   VideoPlayerController _videoPlayerController;
   MainPageScrollController mainController = Get.find();
-  // ChewieController _controller;
   bool _playing = false;
 
   @override
@@ -45,15 +46,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _videoPlayerController.initialize();
     _videoPlayerController.setLooping(true);
     _playOrPause();
-    // _controller = ChewieController(
-    //   videoPlayerController: _videoPlayerController,
-    //   autoPlay: true,
-    //   looping: true,
-    //   fullScreenByDefault: true,
-    //   showControlsOnInitialize:false,
-    //   showControls: false,
-    //
-    // );
+
   }
 
   @override
@@ -64,18 +57,38 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double scale = 1;
+    double videoLayoutWidth;
+    double videoLayoutHeight;
+    if(_videoPlayerController.value.isInitialized){
+
+      double rateWidthHeightContent = screenWidth(context) / widget.contentHeight;
+      double rateWidthContentVideo = screenWidth(context) / _videoPlayerController.value.size.width;
+      double heightVideoByRate = _videoPlayerController.value.size.height * rateWidthContentVideo;
+      print('视频宽:${_videoPlayerController.value.size.width} 视频高:${_videoPlayerController.value.size.height}');
+      print('视频宽高比:${_videoPlayerController.value.size.width/_videoPlayerController.value.size.height}');
+      print('屏幕宽:${screenWidth(context)}  高：${screenHeight(context)}');
+      print('内容高度:${widget.contentHeight}');
+      print('内容宽高比例:$rateWidthHeightContent');
+      print('比例:$rateWidthContentVideo');
+      print('比例换算视频高度:$heightVideoByRate');
+      if(widget.contentHeight > heightVideoByRate ){
+        double rateHeightContentVideo = widget.contentHeight /  _videoPlayerController.value.size.height;
+        videoLayoutHeight = heightVideoByRate;
+        videoLayoutWidth = screenWidth(context);
+        scale = widget.contentHeight / videoLayoutHeight;
+        print('width:$videoLayoutWidth height:$videoLayoutHeight scale:$scale rate:$rateHeightContentVideo');
+      }
+    }
+
+
     return Stack(
       children: [
         LikeGestureWidget(
           onSingleTap: () {
             _playOrPause();
-            print('宽:${_videoPlayerController.value.size.width} 高:${_videoPlayerController.value.size.height}');
-            print('视频宽高比:${_videoPlayerController.value.size.width/_videoPlayerController.value.size.height}');
-            print('videoContsoller aspectRatio:${_videoPlayerController.value.aspectRatio}');
-            print('屏幕宽:${screenWidth(context)}  高：${screenHeight(context)}');
-
           },
-          child: _getVideoPlayer(),
+          child: _getVideoPlayer(videoLayoutWidth,videoLayoutHeight,scale),
         ),
 
         Positioned(
@@ -89,6 +102,9 @@ class _VideoWidgetState extends State<VideoWidget> {
               },
               onClickShare: (){
                 showBottomShare();
+              },
+              onClickHeader: (){
+                widget.onClickHeader?.call();
               },
             )),
         Positioned(
@@ -117,10 +133,17 @@ class _VideoWidgetState extends State<VideoWidget> {
   }
 
 
-  _getVideoPlayer() {
+  _getVideoPlayer(double videoLayoutWidth,double videoLayoutHeight,double scale) {
     return  Stack(
         children: [
-            OverflowBox(child: VideoPlayer(_videoPlayerController)),
+          Transform.scale(
+            scale: scale,
+            alignment: Alignment.topCenter,
+            child: Container(
+                width: videoLayoutWidth,
+                height: videoLayoutHeight ,
+                child: VideoPlayer(_videoPlayerController)),
+          ),
           Obx(()=> _videoWidgetController.playing == true? Container() : _getPauseButton()),
         ],
     );
