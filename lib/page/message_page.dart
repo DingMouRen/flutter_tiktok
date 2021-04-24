@@ -21,6 +21,13 @@ class _MessagePageState extends State<MessagePage>{
         backgroundColor: ColorRes.color_1,
         title: Text('消息',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
         centerTitle: true,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            alignment: Alignment.centerLeft,
+            child: Text('创建群聊',style: TextStyle(fontSize: 14),),
+          )
+        ],
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),

@@ -36,7 +36,7 @@ class _VideoListPageState extends State<VideoListPage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor:Colors.black,
-      statusBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
     ));
     return Scaffold(
       backgroundColor: Colors.black,

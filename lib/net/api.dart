@@ -1,5 +1,7 @@
 import 'package:flutter_tiktok/model/city_item_model.dart';
+import 'package:flutter_tiktok/model/living_rank_model.dart';
 import 'package:flutter_tiktok/model/message_model.dart';
+import 'package:flutter_tiktok/model/star_model.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 
@@ -283,3 +285,22 @@ List<MessageModel> messageList = List.generate(20, (index) {
   model.desc = index%2 == 0?'一条小团团赞了你的作品 · 6:12':'[发布了新作品] · 06-06';
   return model;
 });
+//明星列表
+List<StarModel> starList = [
+  StarModel('赵丽颖', 'assets/images/star_0.jpeg', '888.3w 影响力'),
+  StarModel('杨幂', 'assets/images/star_1.jpeg', '756.3w 影响力'),
+  StarModel('高圆圆', 'assets/images/star_2.jpeg', '743.3w 影响力'),
+  StarModel('李沁', 'assets/images/star_3.jpeg', '739.3w 影响力'),
+  StarModel('迪丽热巴', 'assets/images/star_4.jpeg', '722.3w 影响力'),
+  StarModel('彭于晏', 'assets/images/star_5.jpeg', '700.3w 影响力'),
+];
+
+//直播榜列表
+List<LivingRankModel> livingList = [
+  LivingRankModel('赵丽颖', 'assets/images/star_0.jpeg', '888.3w 人气'),
+  LivingRankModel('杨幂', 'assets/images/star_1.jpeg', '756.3w 人气'),
+  LivingRankModel('高圆圆', 'assets/images/star_2.jpeg', '743.3w 人气'),
+  LivingRankModel('李沁', 'assets/images/star_3.jpeg', '739.3w 人气'),
+  LivingRankModel('迪丽热巴', 'assets/images/star_4.jpeg', '722.3w 人气'),
+  LivingRankModel('彭于晏', 'assets/images/star_5.jpeg', '700.3w 人气'),
+];

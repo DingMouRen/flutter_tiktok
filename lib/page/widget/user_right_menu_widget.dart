@@ -41,8 +41,7 @@ class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 3 * 2 - 40,
                   height: 37,
-                  margin: EdgeInsets.only(left: 20,right: 16),
-                  padding: EdgeInsets.only(left: 16,right: 16),
+                  padding: EdgeInsets.only(left: 36,right: 36),
                   decoration: BoxDecoration(
                     color: ColorRes.color_2.withAlpha(40),
                     borderRadius: BorderRadius.circular(2),
@@ -124,7 +123,7 @@ class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
         },
       ),
       UserRightMenuItemWidget(
-        iconUrl: 'assets/images/gongyi.png',
+        iconUrl: 'assets/images/gongyi.webp',
         title: '抖音公益',
         onTap: (){
 

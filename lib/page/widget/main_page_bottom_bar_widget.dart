@@ -100,14 +100,14 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
       //设置状态栏的颜色和图标模式
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
       ));
 
     }else{
       //设置状态栏的颜色和图标模式
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: ColorRes.color_1,
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
       ));
     }
 

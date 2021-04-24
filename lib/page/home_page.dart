@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/page/home_tab_city_page.dart';
 import 'package:flutter_tiktok/page/home_tab_focus_page.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             margin: EdgeInsets.only(right: 10),
             child: InkWell(
               onTap: (){
-                showToast('搜索');
+                Get.toNamed(Routers.search);
               },
               child:  Image.asset('assets/images/search.webp',width: 35,height: 35,color:ColorRes.color_2)
             ),

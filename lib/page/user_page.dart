@@ -84,7 +84,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
   _getSliverAppBar(){
     return  SliverAppBar(
-      brightness:Brightness.light,
+      brightness:Brightness.dark,
       backgroundColor:ColorRes.color_1,
       pinned: true,
       expandedHeight: 200,

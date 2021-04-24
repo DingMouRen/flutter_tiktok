@@ -23,7 +23,7 @@ class _ShootPageState extends State<ShootPage> {
     super.initState();
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     //   statusBarColor: Colors.transparent,
-    //   statusBarIconBrightness: Brightness.light,
+    //   statusBarIconBrightness: Brightness.dark,
     // ));
 
     _initCamera();

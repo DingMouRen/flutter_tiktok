@@ -40,7 +40,8 @@ class _ShootBottomWidgetState extends State<ShootBottomWidget> {
                 list: ['分段拍','快拍','影集'],
                 initialItem: 1,
                 onSelected: (index){
-                },
+                  print('index:$index');
+            },
               ),
         ],
       ),
