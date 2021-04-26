@@ -48,6 +48,7 @@ class _SearchHotRankWidgetState extends State<SearchHotRankWidget> {
           gradient: LinearGradient(colors: [Color.fromARGB(255, 31, 30, 38),Color.fromARGB(255, 52, 31, 40)]),
         ),
         child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             itemCount: hotList.length,
             itemBuilder: (context,index){
               return _getItemLayout(index);
@@ -65,20 +66,20 @@ class _SearchHotRankWidgetState extends State<SearchHotRankWidget> {
         children: [
           Stack(
             children: [
-              Image.asset('assets/images/tag_bg.webp',color: _getTagBagColor(index),width: 40,height: 40,),
+              Image.asset('assets/images/tag_bg.webp',color: _getTagBagColor(index),width: 30,height: 30,),
               Positioned(
-                left: 16,
-                top: 13,
+                left: 12,
+                top: 10,
                 child: Text('${index+1}',style: TextStyle(
                   color: _getTextColor(index),
                   fontWeight: FontWeight.bold,
-                  fontSize: 16
+                  fontSize: 14
                 ),),
               )
             ],
           ),
           SizedBox(width: 5,),
-          Text(hotList[index],style: TextStyle(color: Colors.white,fontSize: 16),),
+          Text(hotList[index],style: TextStyle(color: Colors.white,fontSize: 14),),
           SizedBox(width: 2,),
           Image.asset(index%2 == 0?'assets/images/tag_hot.webp':'assets/images/tag_recomment.webp',
             width: 18,
@@ -88,7 +89,7 @@ class _SearchHotRankWidgetState extends State<SearchHotRankWidget> {
           Image.asset('assets/images/hot_stroke.webp',width: 16,height: 16,color: ColorRes.color_2,),
           Text('1666.6w',style: TextStyle(
             color: ColorRes.color_2,
-            fontSize: 14
+            fontSize: 12
           ),)
         ],
       ),

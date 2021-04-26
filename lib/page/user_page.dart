@@ -55,6 +55,13 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
         _userPageController.setShowTitle(false);
       }
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ));
+    });
   }
 
   @override

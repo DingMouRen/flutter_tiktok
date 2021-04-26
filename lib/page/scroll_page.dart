@@ -25,6 +25,7 @@ class _ScrollPageState extends State<ScrollPage> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -36,19 +37,19 @@ class _ScrollPageState extends State<ScrollPage> {
             physics: mainPageScrollController.scrollPageViewScrollPage.value ? null : NeverScrollableScrollPhysics(),
             children: [MainPage(pageController:_pageController), UserPage(pageController:_pageController,isLoginUser: false,)],
             onPageChanged: (index){
-              if(index == 1){
-                //设置状态栏的颜色和图标模式
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  statusBarColor: Colors.transparent,
-                  statusBarIconBrightness: Brightness.dark,
-                ));
-              }else{
-                //设置状态栏的颜色和图标模式
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  statusBarColor: ColorRes.color_1,
-                  statusBarIconBrightness: Brightness.dark,
-                ));
-              }
+              // if(index == 1){
+              //   //设置状态栏的颜色和图标模式
+              //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+              //     statusBarColor: Colors.transparent,
+              //     statusBarIconBrightness: Brightness.dark,
+              //   ));
+              // }else{
+              //   //设置状态栏的颜色和图标模式
+              //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+              //     statusBarColor: ColorRes.color_1,
+              //     statusBarIconBrightness: Brightness.dark,
+              //   ));
+              // }
             },
           ),
         ),

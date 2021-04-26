@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/message_page_controller.dart';
 import 'package:flutter_tiktok/model/message_model.dart';
 import 'package:flutter_tiktok/res/colors.dart';
@@ -13,6 +14,19 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage>{
   MessagePageController _pageController = Get.put(MessagePageController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +35,7 @@ class _MessagePageState extends State<MessagePage>{
         backgroundColor: ColorRes.color_1,
         title: Text('消息',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
         centerTitle: true,
+        elevation: 0,
         actions: [
           Container(
             margin: EdgeInsets.only(right: 20),

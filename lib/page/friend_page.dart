@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/friend_page_controller.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/page/widget/video_widget.dart';
@@ -24,6 +25,12 @@ class _FriendPageState extends State<FriendPage>{
     super.initState();
     //初始化右边用户信息
     _mainController.setCurrentUserOfVideo(userModelList[0]);
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    });
   }
 
   @override

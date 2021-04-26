@@ -38,6 +38,10 @@ dependencies:
   chewie: ^1.0.0
   # 相机插件，还在开发中
   camera: ^0.8.1
+  # 事件总线
+  event_bus: ^2.0.0
+  # 二维码
+#  qrscan: ^0.2.22
 
 dev_dependencies:
 

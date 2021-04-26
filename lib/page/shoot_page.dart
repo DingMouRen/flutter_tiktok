@@ -21,10 +21,14 @@ class _ShootPageState extends State<ShootPage> {
   @override
   void initState() {
     super.initState();
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Colors.transparent,
-    //   statusBarIconBrightness: Brightness.dark,
-    // ));
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    });
 
     _initCamera();
   }

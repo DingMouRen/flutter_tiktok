@@ -11,8 +11,6 @@ void main() {
     child: GetMaterialApp(
       //隐藏Flutter项目右上角的debug标签
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-      ),
       defaultTransition: Transition.rightToLeft,
       getPages: RouterManager.routes,
       initialRoute: Routers.scroll,

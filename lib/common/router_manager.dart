@@ -3,14 +3,17 @@ import 'package:flutter_tiktok/page/home_page.dart';
 import 'package:flutter_tiktok/page/home_tab_city_page.dart';
 import 'package:flutter_tiktok/page/home_tab_focus_page.dart';
 import 'package:flutter_tiktok/page/home_tab_recommend_page.dart';
+import 'package:flutter_tiktok/page/living_page.dart';
 import 'package:flutter_tiktok/page/main_page.dart';
 import 'package:flutter_tiktok/page/message_page.dart';
+import 'package:flutter_tiktok/page/scan_page.dart';
 import 'package:flutter_tiktok/page/scroll_page.dart';
 import 'package:flutter_tiktok/page/search_page.dart';
 import 'package:flutter_tiktok/page/shoot_page.dart';
 import 'package:flutter_tiktok/page/test.dart';
 import 'package:flutter_tiktok/page/user_page.dart';
 import 'package:flutter_tiktok/page/video_list_page.dart';
+import 'package:flutter_tiktok/page/my_tiktok_code_page.dart';
 import 'package:get/get.dart';
 
 ///路由管理者
@@ -28,6 +31,9 @@ class RouterManager{
     GetPage(name: Routers.homeTabRecommend, page: () => HomeTabRecommendPage()),
     GetPage(name: Routers.videoList, page: () => VideoListPage()),
     GetPage(name: Routers.search, page: () => SearchPage()),
+    GetPage(name: Routers.scan, page: () => ScanPage()),
+    GetPage(name: Routers.tikTokCode, page: () => MyTikTokCodePage()),
+    GetPage(name: Routers.living, page: () => LivingPage()),
   ];
 
 
@@ -47,4 +53,7 @@ class Routers{
   static final String homeTabRecommend = '/homeTabRecommend';
   static final String videoList = '/videoList';
   static final String search = '/search';
+  static final String scan = '/scan';
+  static final String tikTokCode = '/tikTokCode';
+  static final String living = '/living';
 }

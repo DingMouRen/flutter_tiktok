@@ -52,7 +52,7 @@ class _SearchLivingRankWidgetState extends State<SearchLivingRankWidget> {
   }
 
   Widget _getItemLayout(int index,LivingRankModel model) {
-    double headerSize = 40;
+    double headerSize = 30;
     return Container(
       padding: EdgeInsets.only(top: 10,bottom: 10),
       child: Row(
@@ -61,7 +61,7 @@ class _SearchLivingRankWidgetState extends State<SearchLivingRankWidget> {
           Text('${index+1}',style: TextStyle(
             color: _getTextColor(index),
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),),
           SizedBox(width: 10,),
           Container(
@@ -78,11 +78,11 @@ class _SearchLivingRankWidgetState extends State<SearchLivingRankWidget> {
               ),
           ),
           SizedBox(width: 10,),
-          Text(model.name,style: TextStyle(color: Colors.white,fontSize: 16),),
+          Text(model.name,style: TextStyle(color: Colors.white,fontSize: 14),),
           Expanded(child: SizedBox()),
           Text(model.popularity,style: TextStyle(
               color: ColorRes.color_2,
-              fontSize: 14
+              fontSize: 12
           ),)
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/controller/search_page_controller.dart';
 import 'package:flutter_tiktok/page/widget/search_brand_rank_widget.dart';
 import 'package:flutter_tiktok/page/widget/search_hot_rank_widget.dart';
@@ -9,6 +10,8 @@ import 'package:flutter_tiktok/page/widget/search_record_widget.dart';
 import 'package:flutter_tiktok/page/widget/search_star_rank_widget.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
+
+import '../common/router_manager.dart';
 ///搜索页
 class SearchPage extends StatefulWidget {
   SearchPage({Key key}) : super(key: key);
@@ -25,6 +28,12 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ColorRes.color_1,
+        statusBarIconBrightness: Brightness.dark,
+      ));
+    });
   }
 
   @override
@@ -45,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
         leading: IconButton(
           icon: ImageIcon(AssetImage('assets/images/scan.webp'),size: 20,),
           onPressed: (){
-            Navigator.pop(context);
+            Get.toNamed(Routers.scan);
           },
         ),
       ),
@@ -191,7 +200,6 @@ class _SearchPageState extends State<SearchPage> {
         child: PageView.builder(
             controller: _pageController,
             itemCount: 5,
-            physics: NeverScrollableScrollPhysics(),
             onPageChanged: (index){
               _searchPageController.setIndexSelectedRank(index);
             },

@@ -1,7 +1,9 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/controller/video_widget_controller.dart';
+import 'package:flutter_tiktok/event/stop_play.dart';
 import 'package:flutter_tiktok/model/comment_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/video_bottom_bar_widget.dart';
@@ -47,12 +49,17 @@ class _VideoWidgetState extends State<VideoWidget> {
     _videoPlayerController.setLooping(true);
     _playOrPause();
 
+    Application.eventBus.on<StopPlayEvent>().listen((event) {
+      _videoPlayerController.pause();
+    });
+
   }
 
   @override
   void dispose() {
     super.dispose();
     _videoPlayerController.dispose();
+    _videoWidgetController.setPlayState(false);
   }
 
   @override

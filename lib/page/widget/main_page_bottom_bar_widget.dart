@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/event/stop_play.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -59,6 +61,7 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
               flex: 1,
               child:InkWell(
                 onTap: (){
+                  Application.eventBus.fire(StopPlayEvent());
                   Get.toNamed(Routers.shoot);
                 },
                 child: Image.asset('assets/images/shoot_btn.webp'),
@@ -81,7 +84,7 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
     return TextButton(
         onPressed: (){
           mainPageScrollController.selectIndexBottomBarMainPage(index);
-          setSystemStatusBarStyle(index);
+          // setSystemStatusBarStyle(index);
         },
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.transparent),

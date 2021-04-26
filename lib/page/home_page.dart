@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/event/stop_play.dart';
 import 'package:flutter_tiktok/page/home_tab_city_page.dart';
 import 'package:flutter_tiktok/page/home_tab_focus_page.dart';
 import 'package:flutter_tiktok/page/home_tab_recommend_page.dart';
@@ -38,6 +40,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     _tabController = TabController(length: 3, vsync: this,initialIndex:2);
     _pageController = PageController(initialPage: 2,keepPage: true);
+    WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    });
   }
 
   @override
@@ -91,7 +99,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             margin: EdgeInsets.only(left: 10),
             child: InkWell(
               onTap: (){
-                showToast('跳往直播页');
+                Get.toNamed(Routers.living);
               },
               child:  Image.asset('assets/images/live_btn.webp',width: 35,height: 35)
             ),
@@ -101,6 +109,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             margin: EdgeInsets.only(right: 10),
             child: InkWell(
               onTap: (){
+                Application.eventBus.fire(StopPlayEvent());
                 Get.toNamed(Routers.search);
               },
               child:  Image.asset('assets/images/search.webp',width: 35,height: 35,color:ColorRes.color_2)
