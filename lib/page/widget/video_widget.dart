@@ -2,7 +2,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
-import 'package:flutter_tiktok/controller/video_widget_controller.dart';
 import 'package:flutter_tiktok/event/stop_play.dart';
 import 'package:flutter_tiktok/model/comment_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
@@ -36,7 +35,6 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  VideoWidgetController _videoWidgetController = Get.put(VideoWidgetController());
   VideoPlayerController _videoPlayerController;
   MainPageScrollController mainController = Get.find();
   bool _playing = false;
@@ -59,7 +57,6 @@ class _VideoWidgetState extends State<VideoWidget> {
   void dispose() {
     super.dispose();
     _videoPlayerController.dispose();
-    _videoWidgetController.setPlayState(false);
   }
 
   @override
@@ -89,54 +86,59 @@ class _VideoWidgetState extends State<VideoWidget> {
     }
 
 
-    return Stack(
-      children: [
-        LikeGestureWidget(
-          onSingleTap: () {
-            _playOrPause();
-          },
-          child: _getVideoPlayer(videoLayoutWidth,videoLayoutHeight,scale),
-        ),
+    return Scaffold(
+      backgroundColor: ColorRes.color_1,
+      body: Stack(
+        children: [
+          LikeGestureWidget(
+            onSingleTap: () {
+              _playOrPause();
+            },
+            child: _getVideoPlayer(videoLayoutWidth,videoLayoutHeight,scale),
+          ),
 
-        Positioned(
-            right: 10,
-            bottom: 110,
-            child: VideoRightBarWidget(
-              videoModel: widget.videoModel,
-              showFocusButton: widget.showFocusButton,
-              onClickComment: (){
-                showBottomComment();
-              },
-              onClickShare: (){
-                showBottomShare();
-              },
-              onClickHeader: (){
-                widget.onClickHeader?.call();
-              },
-            )),
-        Positioned(
-            right: 2,
+          Positioned(
+              right: 10,
+              bottom: 110,
+              child: VideoRightBarWidget(
+                videoModel: widget.videoModel,
+                showFocusButton: widget.showFocusButton,
+                onClickComment: (){
+                  showBottomComment();
+                },
+                onClickShare: (){
+                  showBottomShare();
+                },
+                onClickHeader: (){
+                  widget.onClickHeader?.call();
+                },
+              )),
+          Positioned(
+              right: 2,
+              bottom: 20,
+              child: VinylDisk(widget.videoModel.videoMusicImage)),
+          Positioned(
+            left: 12,
             bottom: 20,
-            child: VinylDisk(widget.videoModel.videoMusicImage)),
-        Positioned(
-          left: 12,
-          bottom: 20,
-          child: VideoBottomBarWidget(widget.videoModel),
-        )
+            child: VideoBottomBarWidget(widget.videoModel),
+          )
 
 
-      ],
+        ],
+      ),
     );
   }
 
   void _playOrPause() {
     _playing = !_playing;
-    _videoWidgetController.setPlayState(_playing);
     if (_playing) {
       _videoPlayerController.play();
     } else {
       _videoPlayerController.pause();
     }
+    setState(() {
+
+    });
   }
 
 
@@ -151,7 +153,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                 height: videoLayoutHeight ,
                 child: VideoPlayer(_videoPlayerController)),
           ),
-          Obx(()=> _videoWidgetController.playing == true? Container() : _getPauseButton()),
+        _playing == true? Container() : _getPauseButton(),
         ],
     );
   }

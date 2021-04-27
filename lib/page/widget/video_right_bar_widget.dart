@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tiktok/controller/video_widget_controller.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
@@ -24,7 +23,6 @@ class VideoRightBarWidget extends StatefulWidget {
 
 class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
 
-  VideoWidgetController _videoWidgetController = Get.find();
   double _widgetWidth = 50;
   @override
   void initState() {
