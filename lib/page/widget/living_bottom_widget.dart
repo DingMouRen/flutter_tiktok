@@ -34,6 +34,7 @@ class _LivingBottomWidgetState extends State<LivingBottomWidget> {
   @override
   void dispose() {
     super.dispose();
+    _scrollController.dispose();
   }
 
   @override

@@ -73,9 +73,7 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin{
         child: SizedBox(
           width: 50,
           height: 50,
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.red,
-          ),
+          
         ),
       );
     }
