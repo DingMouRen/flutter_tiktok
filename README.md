@@ -6,4 +6,4 @@
  
 |首页|首页|
 |---|---|
-|![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_1.gif)|![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif）|
+|![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_1.gif)|![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)|
