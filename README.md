@@ -4,10 +4,7 @@
 <table >
   <tr>
     <th>Month</th>
-     
+     <td>January</td>
   </tr>
-  <tr>
-    <td>January</td>
-     
-  </tr>
+   
 </table>
