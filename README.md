@@ -5,13 +5,15 @@
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `#c5f015`
 - ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `#1589F0`
  
-```diff
- 哈哈哈 in red
- text in green
- text in orange
- text in gray
-@@ text in purple (and bold)@@
-```
+# Color Test Document
+
+<style>H1{color:Blue;}</style>
+<style>H2{color:DarkOrange;}</style>
+<style>p{color:Black;}</style>
+
+## Second Heading
+
+This is a test to see how the colors work.
 <table >
   <tr>
     <th>
