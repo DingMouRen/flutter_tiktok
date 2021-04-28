@@ -4,10 +4,18 @@
 
  `300+组件收录`
  
-<p align="center"> ![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_1.gif)![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_1.gif)</p>
+
 ![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_1.gif)
 ![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)
-![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)
-![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)
-![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)
-![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_2.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_3.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_4.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_5.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_6.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_7.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_8.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_9.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_10.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_11.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_12.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_13.gif)
+![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_14.gif)
