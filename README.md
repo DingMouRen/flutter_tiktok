@@ -3,7 +3,9 @@
 #### <p align="center"> Flutter实现抖音的UI效果，希望大家喜欢，喜欢的话就点个小🌟🌟吧。</p>
 <table >
   <tr>
-    <th>![img1](https://github.com/DingMouRen/LayoutManagerGroup/raw/master/picture/img1.gif) </th>
+    <th>
+      <img src="https://github.com/DingMouRen/LayoutManagerGroup/raw/master/picture/img1.gif"/>
+    </th>
      <td>北冥有鱼 其名为鲲 鲲之大
 一锅炖不下
 化而为鸟 其名为鹏 鹏之大
