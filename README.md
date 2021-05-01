@@ -1,9 +1,10 @@
 ![img1](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/img_1.png)<br>
 
-#### <p align="center"> Flutter实现抖音的UI效果，希望大家喜欢，喜欢的话就点个小🌟🌟吧。</p>
+#### <p align="center"> Flutter实现抖音的UI效果，希望大家喜欢</p>
 
 #### <p align="center"> `Flutter Version:2.0.2` `Dart Version:2.12.1`</p>
-![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/emoi_1.jpeg)
+<p align="center"> <img src="https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/emoi_1.jpeg"   /></p>
+
 
 |推荐|视频点赞|侧边栏点赞|
 |---|---|---|
