@@ -37,4 +37,4 @@
 ##### <p align="center"> 来瓶雪花 </p>
 ##### <p align="center"> 让我们勇闯天涯 </p>
 
-
+![img1](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/img_pay.jpg)<br>
