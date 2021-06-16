@@ -50,8 +50,8 @@ class _LivingVideoWidgetState extends State<LivingVideoWidget> {
     return Container(
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width,
-        maxHeight: 200,
-        minHeight: 200,
+        maxHeight: 240,
+        minHeight: 240,
       ),
       child: Stack(
         children: [
