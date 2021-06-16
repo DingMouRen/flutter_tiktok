@@ -76,6 +76,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: ColorRes.color_1,
       body: CustomScrollView(
         controller: _scrollController,
         physics: BouncingScrollPhysics(),

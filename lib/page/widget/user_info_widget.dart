@@ -16,7 +16,7 @@ class UserInfoWidget extends StatefulWidget {
 }
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
-  double _widgetHeight = 300;
+  double _widgetHeight = 320;
   bool focus = false;
   @override
   void initState() {
