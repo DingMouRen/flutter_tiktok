@@ -1,8 +1,12 @@
 ![img1](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/img_1.png)<br>
 
-#### <p align="center"> Flutter实现抖音的UI效果，希望大家喜欢，喜欢的话就点个小🌟🌟吧。</p>
+#### <p align="center"> Flutter实现抖音的UI效果，希望大家喜欢</p>
 
-#### `Flutter Version:2.0.2` `Dart Version:2.12.1`
+#### <p align="center"> `Flutter Version:2.0.2` `Dart Version:2.12.1`</p>
+#### <p align="center"> [B站视频地址](https://www.bilibili.com/video/BV1mK4y1w78B/)</p>
+<p align="center"> <img src="https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/emoi_1.jpeg"   /></p>
+
+
 
 |推荐|视频点赞|侧边栏点赞|
 |---|---|---|
@@ -25,7 +29,6 @@
 |拍摄页|扫一扫/抖音码||
 |---|---|---|
 |![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_12.gif)|![](https://github.com/DingMouRen/flutter_tiktok/blob/master/shoot/gif_13.gif)||
-
 
 
 
