@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
+import 'package:flutter_tiktok/common/sp_keys.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/controller/user_controller.dart';
 import 'package:flutter_tiktok/controller/user_page_controller.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
@@ -10,18 +12,20 @@ import 'package:flutter_tiktok/page/video_list_page.dart';
 import 'package:flutter_tiktok/page/widget/user_info_widget.dart';
 import 'package:flutter_tiktok/page/widget/user_item_grid_widget.dart';
 import 'package:flutter_tiktok/page/widget/user_more_bottom_sheet.dart';
+import 'package:flutter_tiktok/page/widget/user_work_list_widget.dart';
 import 'package:flutter_tiktok/res/colors.dart';
+import 'package:flutter_tiktok/util/sp_util.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 
 class UserPage extends StatefulWidget {
   PageController _scrollPageController;
   bool _isLoginUser;
-  UserModel userModel;
-  UserPage({PageController pageController,bool isLoginUser,UserModel userModel}){
+  int uid;
+  UserPage({PageController pageController,bool isLoginUser,UserModel userModel,int uid}){
     this._scrollPageController = pageController;
     this._isLoginUser = isLoginUser;
-    this.userModel = userModel;
+   this.uid = uid;
   }
 
   @override
@@ -36,15 +40,11 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
   TabController _tabController;
   PageController _pageController = PageController(keepPage: true);
   ScrollController _scrollController = ScrollController();
-  UserModel _userModel;
+  UserController _userController = Get.put(UserController());
   @override
   void initState() {
     super.initState();
-    if(null == widget.userModel){
-      _userModel = _mainController.userModelCurrent.value;
-    }else{
-      _userModel = widget.userModel;
-    }
+
     _tabController = TabController(length: 2, vsync: this);
     _scrollController.addListener(() {
       double position =_scrollController.offset;
@@ -62,6 +62,8 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
         statusBarIconBrightness: Brightness.dark,
       ));
     });
+
+    _userController.getUserWorkList(_userController.loginUserUid.value);
   }
 
   @override
@@ -119,10 +121,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: [StretchMode.zoomBackground],
         collapseMode: CollapseMode.parallax,
-        title: Obx(()=> Text(_userPageController.showTitle.value?_userModel.name:'')),
+        title: Obx(()=> Text(_userPageController.showTitle.value?_userController.userInfoExResponse.value.user.nickname:'')),
         centerTitle:true,
         background: Image.asset(
-          _userModel.headerBgImage,
+          'assets/images/bg_1.jpg',
           fit: BoxFit.cover,
         ),
       ),
@@ -138,7 +140,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
     return SliverToBoxAdapter(
       child: UserInfoWidget(
         isLoginUser: widget._isLoginUser,
-        userModel: _userModel,
+        uid: widget.uid,
       ),
     );
   }
@@ -158,10 +160,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
               unselectedLabelStyle:TextStyle(fontSize: 15,color: Colors.grey),
               tabs: <Widget>[
                 Tab(
-                  child: Text('作品 ${_userModel.worksVideo.length}',),
+                  child: Obx(()=>Text('作品 ${_userController.userWorkList.length}'),),
                 ),
                 Tab(
-                  child: Text('喜欢 ${_userModel.likeVideo.length}',
+                  child: Text('喜欢 6',
                   ),
                 ),
               ],
@@ -181,35 +183,37 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
     double itemHeight = itemWidth / 9 * 16;
 
     return SliverToBoxAdapter(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width,
-          minWidth: MediaQuery.of(context).size.width,
-          maxHeight:itemHeight * _userModel.worksVideo.length / 3,
-        ),
-        child:  PageView.builder(
+      child: Obx(()=>
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width,
+              minWidth: MediaQuery.of(context).size.width,
+              maxHeight:itemHeight * _userController.userWorkList.length / 3,
+            ),
+            child:  PageView.builder(
               controller: _pageController,
               itemCount:2,
               itemBuilder: (context,index){
-                return _getPageLayout(index);
+                return index == 0?UserWorkListWidget():_getPageLayout(index);
               },
               onPageChanged: (index){
                 _tabController.animateTo(index);
               },
             ),
-        ),
+          ),
+      ),
     );
   }
 
-  //获取PageView的煤业
+  //获取PageView的每页
   Widget _getPageLayout(int index) {
-    List<String> gifList = index == 0? _userModel.worksVideoGif:_userModel.likeVideoGif;
+
     return Container(
       color: ColorRes.color_1,
       child: GridView.builder(
           //处理GridView顶部空白
           padding: EdgeInsets.zero,
-          itemCount: gifList.length,
+          itemCount: _userController.userWorkList.length,
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -223,9 +227,9 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
               childAspectRatio: 9/16),
               itemBuilder: (BuildContext context, int index) {
                 return UserItemGridWidget(
-                  url: gifList[index],
+                  url: _userController.userWorkList[index].content.attachments[0].cover,
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => VideoListPage(videoList: _userModel.worksVideo,)));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => VideoListPage(videoList: _userModel.worksVideo,)));
                   },
                 );
               },

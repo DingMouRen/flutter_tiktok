@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 //拍摄页顶部部件
 class ShootTopWidget extends StatefulWidget {
   ShootTopWidget({Key key}) : super(key: key);
@@ -41,7 +42,7 @@ class _ShootTopWidgetState extends State<ShootTopWidget> {
             alignment: Alignment.topLeft,
               child: InkWell(
                   onTap: (){
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Image.asset('assets/images/cross.webp',color: Colors.white,width: 25,height: 25,))),
           Align(

@@ -96,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
 
           InkWell(
               onTap:(){
-                Navigator.pop(context);
+                Get.back();
               },
               child: Text('取消',style: TextStyle(color: Colors.white,fontSize: 14),))
 

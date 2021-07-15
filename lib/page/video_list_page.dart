@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/video_widget.dart';
 import 'package:flutter_tiktok/res/colors.dart';
+import 'package:get/get.dart';
 ///视频列表页
 class VideoListPage extends StatefulWidget {
   List<VideoModel> videoList;
@@ -70,7 +71,7 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: Icon(Icons.arrow_back_ios_rounded,color: Colors.white,),
               onPressed: (){
-                Navigator.pop(context);
+                Get.back();
               },
           ),
           ),
@@ -99,13 +100,14 @@ class _VideoListPageState extends State<VideoListPage> {
             itemCount: widget.videoList.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return VideoWidget(
-                videoModel: widget.videoList[index],
-                showFocusButton: false,
-                onClickHeader: (){
-
-                },
-              );
+              return Container();
+              // return VideoWidget(
+              //   videoModel: widget.videoList[index],
+              //   showFocusButton: false,
+              //   onClickHeader: (){
+              //
+              //   },
+              // );
             },
             onPageChanged: (index){
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VideoShareWidget extends StatefulWidget {
   VideoShareWidget({Key key}) : super(key: key);
@@ -106,7 +107,7 @@ class _VideoShareWidgetState extends State<VideoShareWidget> {
               bottom: 0,
               child: InkWell(
                   onTap: (){
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Image.asset('assets/images/bg_cross.webp',width: 25,height: 25,))),
         ],

@@ -1,13 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/common/router_manager.dart';
+import 'package:flutter_tiktok/common/sp_keys.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
+import 'package:flutter_tiktok/controller/user_controller.dart';
+import 'package:flutter_tiktok/model/response/user_info_ex_response.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:flutter_tiktok/res/colors.dart';
+import 'package:flutter_tiktok/util/sp_util.dart';
 import 'package:get/get.dart';
 ///用户信息
 class UserInfoWidget extends StatefulWidget {
   bool isLoginUser;
-  UserModel userModel;
-  UserInfoWidget({this.isLoginUser,this.userModel});
+  int uid;
+  UserInfoWidget({this.isLoginUser, this.uid});
 
   @override
   _UserInfoWidgetState createState() {
@@ -16,11 +22,14 @@ class UserInfoWidget extends StatefulWidget {
 }
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
+  UserController _userController = Get.put(UserController());
   double _widgetHeight = 320;
   bool focus = false;
+  bool isLoginUser = true;
   @override
   void initState() {
     super.initState();
+    _userController.getUserInfoEx(widget.uid.toString());
 
   }
 
@@ -64,20 +73,24 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 80,
-          height: 80,
-          margin: EdgeInsets.only(left: 16),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              border: Border.fromBorderSide(BorderSide(color: ColorRes.color_1,width: 2)),
-              image: DecorationImage(
-                  image: AssetImage(widget.userModel.headerImg)
-              )
-          ),
-        ),
+        Obx((){
+          UserInfoExUser userEx = _userController.userInfoExResponse.value.user;
+          return Container(
+            width: 80,
+            height: 80,
+            margin: EdgeInsets.only(left: 16),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.fromBorderSide(BorderSide(color: ColorRes.color_1,width: 2)),
+                image: DecorationImage(
+                    image: userEx == null?AssetImage('assets/images/person_holder.png'):NetworkImage(userEx.portrait),
+                  fit: BoxFit.cover
+                )
+            ),
+          );
+        }),
          Expanded(
-           child: widget.isLoginUser?_getLoginUser():_getCommonUser(),
+           child: _userController.isLoginUser.value?_getLoginUser():_getCommonUser(),
          ),
       ],
     );
@@ -86,7 +99,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   _getLoginUser(){
     return InkWell(
       onTap: (){
-
+        Get.toNamed(Routers.editUserInfo);
       },
       child: Container(
         height: 37,
@@ -128,17 +141,17 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 10,),
-          Text(widget.userModel.name,
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),),
+          Obx(()=>Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.user.nickname,
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),),),
           SizedBox(height: 5,),
-          Text('抖音号：${widget.userModel.douYinNumber}',
+          Text('抖音号：${widget.uid}',
             style: TextStyle(color: ColorRes.color_2,fontSize: 12),
           ),
           SizedBox(height: 10,),
           Divider(color: Colors.grey.withAlpha(100),height: 0.05,),
           SizedBox(height: 10,),
-          Text(widget.userModel.introduction,
-            style: TextStyle(color: Colors.white,fontSize: 14),),
+          Obx(()=> Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.user.bio,
+            style: TextStyle(color: Colors.white,fontSize: 14),),),
           SizedBox(height: 5,),
           _getSexCity(),
           SizedBox(height: 10,),
@@ -162,13 +175,9 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(widget.userModel.male?'assets/images/male.webp':'assets/images/famale.webp',
-                width: 10,
-                height: 10,
-              ),
+              _getImgGender(context),
               SizedBox(width: 2,),
-              Text('29岁',
-                style: TextStyle(color: Colors.grey,fontSize: 10),),
+              _getAge(context)
             ],
           ),
         ),
@@ -180,7 +189,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
             color: ColorRes.color_2.withAlpha(50),
             borderRadius: BorderRadius.circular(2),
           ),
-          child:  Text(widget.userModel.city,
+          child:  Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.user.city,
             style: TextStyle(color: Colors.grey,fontSize: 10),),
         ),
       ],
@@ -190,24 +199,58 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   _getNumberLayout() {
     return  Row(
         children: [
-          Text(widget.userModel.likeTotalNumber,
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+          Obx(()=>Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.likeCount.toString(),
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),),
           SizedBox(width: 2,),
           Text('获赞',
             style: TextStyle(color: ColorRes.color_2,fontSize: 13),),
           SizedBox(width: 15,),
-          Text(widget.userModel.focusNumber,
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+          Obx(()=>Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.followingCount.toString(),
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),),
           SizedBox(width: 2,),
           Text('关注',
             style: TextStyle(color: ColorRes.color_2,fontSize: 13),),
           SizedBox(width: 15,),
-          Text(widget.userModel.fansNumber,
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+          Obx(()=>Text(_userController.userInfoExResponse.value.user == null ?'':_userController.userInfoExResponse.value.followerCount.toString(),
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),),
           SizedBox(width: 2,),
           Text('粉丝',
             style: TextStyle(color: ColorRes.color_2,fontSize: 13),),
         ],
     );
+  }
+
+  //获取性别图标
+  _getImgGender(BuildContext context) {
+    return  Obx((){
+      if(_userController.userInfoExResponse == null){
+        return Image.asset('assets/images/male.webp',
+          width: 10,
+          height: 10,
+        );
+      }else{
+        int gender = 2;
+        UserInfoExUser userEx = _userController.userInfoExResponse.value.user;
+        if(userEx != null) gender = userEx.gender;
+        return Image.asset(gender == 2?'assets/images/male.webp':'assets/images/famale.webp',
+          width: 10,
+          height: 10,
+        );
+      }
+    });
+  }
+  //获取年龄
+  _getAge(BuildContext context) {
+    return Obx((){
+      if(_userController.userInfoExResponse.value.user == null){
+        return Container();
+      }else{
+        String birth = _userController.userInfoExResponse.value.user.birth;
+        List<String> tempArr = birth.split('-');
+        int age = DateTime.now().year - int.parse(tempArr[0]);
+        return  Text('$age岁',
+          style: TextStyle(color: Colors.grey,fontSize: 10),);
+      }
+    });
   }
 }

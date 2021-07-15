@@ -24,7 +24,7 @@ class _FriendPageState extends State<FriendPage>{
   void initState() {
     super.initState();
     //初始化右边用户信息
-    _mainController.setCurrentUserOfVideo(userModelList[0]);
+    // _mainController.setCurrentUserOfVideo(userModelList[0]);
     WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.black,
@@ -47,10 +47,11 @@ class _FriendPageState extends State<FriendPage>{
             itemCount: _controller.videoList.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: false,);
+              // return VideoWidget(videoModel: _controller.videoList[index],showFocusButton: false,);
+              return Container();
             },
             onPageChanged: (index){
-              _mainController.setCurrentUserOfVideo(userModelList[index]);
+              // _mainController.setCurrentUserOfVideo(userModelList[index]);
             },
           ),
           Positioned(

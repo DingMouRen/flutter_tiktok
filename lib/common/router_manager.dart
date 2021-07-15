@@ -1,16 +1,22 @@
+import 'package:flutter_tiktok/page/feed_publish_page.dart';
 import 'package:flutter_tiktok/page/friend_page.dart';
 import 'package:flutter_tiktok/page/home_page.dart';
 import 'package:flutter_tiktok/page/home_tab_city_page.dart';
 import 'package:flutter_tiktok/page/home_tab_focus_page.dart';
 import 'package:flutter_tiktok/page/home_tab_recommend_page.dart';
 import 'package:flutter_tiktok/page/living_page.dart';
+import 'package:flutter_tiktok/page/login_page.dart';
 import 'package:flutter_tiktok/page/main_page.dart';
 import 'package:flutter_tiktok/page/message_page.dart';
+import 'package:flutter_tiktok/page/modify_info_page.dart';
+import 'package:flutter_tiktok/page/register_page.dart';
 import 'package:flutter_tiktok/page/scan_page.dart';
 import 'package:flutter_tiktok/page/scroll_page.dart';
 import 'package:flutter_tiktok/page/search_page.dart';
+import 'package:flutter_tiktok/page/setting_page.dart';
 import 'package:flutter_tiktok/page/shoot_page.dart';
 import 'package:flutter_tiktok/page/test.dart';
+import 'package:flutter_tiktok/page/user_info_edit_page.dart';
 import 'package:flutter_tiktok/page/user_page.dart';
 import 'package:flutter_tiktok/page/video_list_page.dart';
 import 'package:flutter_tiktok/page/my_tiktok_code_page.dart';
@@ -34,6 +40,12 @@ class RouterManager{
     GetPage(name: Routers.scan, page: () => ScanPage()),
     GetPage(name: Routers.tikTokCode, page: () => MyTikTokCodePage()),
     GetPage(name: Routers.living, page: () => LivingPage()),
+    GetPage(name: Routers.login, page: () => LoginPage(),transition: Transition.downToUp,),
+    GetPage(name: Routers.register, page: () => RegisterPage()),
+    GetPage(name: Routers.setting, page: () => SettingPage()),
+    GetPage(name: Routers.editUserInfo, page: () => UserInfoEditPage()),
+    GetPage(name: Routers.modifyUserInfo, page: () => ModifyInfoPage()),
+    GetPage(name: Routers.feedPublish, page: () => FeedPublishPage()),
   ];
 
 
@@ -56,4 +68,10 @@ class Routers{
   static final String scan = '/scan';
   static final String tikTokCode = '/tikTokCode';
   static final String living = '/living';
+  static final String login = '/login';
+  static final String register = '/register';
+  static final String setting = '/setting';
+  static final String editUserInfo = '/editUserInfo';
+  static final String modifyUserInfo = '/modifyUserInfo';
+  static final String feedPublish = '/feedPublish';
 }

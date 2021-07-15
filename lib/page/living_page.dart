@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/page/widget/living_page_widget.dart';
+import 'package:get/get.dart';
 //直播页
 class LivingPage extends StatefulWidget {
   LivingPage({Key key}) : super(key: key);
@@ -45,7 +46,7 @@ class _LivingPageState extends State<LivingPage> {
             itemBuilder: (context,index){
               return LivingPageWidget(
                 onClosed: (){
-                  Navigator.pop(context);
+                  Get.back();
                 },
               );
             }),

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
-import 'package:flutter_tiktok/event/stop_play.dart';
+import 'package:flutter_tiktok/event/stop_play_event.dart';
 import 'package:flutter_tiktok/page/home_tab_city_page.dart';
 import 'package:flutter_tiktok/page/home_tab_focus_page.dart';
 import 'package:flutter_tiktok/page/home_tab_recommend_page.dart';
@@ -38,8 +38,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this,initialIndex:2);
-    _pageController = PageController(initialPage: 2,keepPage: true);
+    _tabController = TabController(length: 2, vsync: this,initialIndex:1);
+    _pageController = PageController(initialPage: 1,keepPage: true);
     WidgetsBinding.instance.addPostFrameCallback((_bottomBarLayout) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.black,
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       alignment: Alignment.center,
       child: TabBar(
         tabs: [
-          Text('杭州'),
+          // Text('杭州'),
           Text('关注'),
           Text('推荐'),
         ],
@@ -162,8 +162,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: PageView(
               controller: _pageController,
               children: [
-                HomeTabCityPage(),
-                HomeTabFocusPage(pageController: widget._scrollPageController,),
+                // HomeTabCityPage(),
+                HomeTabFocusPage(
+                  contentHeight: contentHeight,
+                  pageController: widget._scrollPageController,),
                 HomeTabRecommendPage(
                   contentHeight: contentHeight,
                   pageController: widget._scrollPageController,

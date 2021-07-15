@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../model/comment_model.dart';
 import '../../util/screen_utils.dart';
 import '../../util/screen_utils.dart';
+import 'package:get/get.dart';
 ///视频评论部件
 class VideoCommentWidget extends StatefulWidget {
   List<CommentModel> commentList;
@@ -57,7 +58,7 @@ class _VideoCommentWidgetState extends State<VideoCommentWidget> {
             top: 10,right: 10,
               child: InkWell(
                 onTap: (){
-                  Navigator.pop(context);
+                  Get.back();
                 },
                   child: Image.asset('assets/images/cross.webp',color: Colors.grey,width: 20,height: 20,)))
         ],

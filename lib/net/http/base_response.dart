@@ -1,14 +1,14 @@
 class BaseResponse{
   dynamic data;
-  String code;
-  String msg;
+  int code;
+  String message;
 
-  BaseResponse(this.data, this.code, this.msg);
+  BaseResponse(this.data, this.code, this.message);
 
   BaseResponse.fromJson(Map<String,dynamic> json){
     data = json['data'];
     code = json['code'];
-    msg = json['msg'];
+    message = json['message'];
   }
 
 

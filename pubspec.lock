@@ -188,6 +188,27 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.2"
+  flutter_easyloading:
+    dependency: "direct main"
+    description:
+      name: flutter_easyloading
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.11"
+  flutter_spinkit:
+    dependency: transitive
+    description:
+      name: flutter_spinkit
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "5.0.0"
   flutter_test:
     dependency: transitive
     description: flutter
@@ -226,6 +247,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.2"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.7+22"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.6"
   js:
     dependency: transitive
     description:
@@ -532,6 +567,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      name: video_thumbnail
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.5+1"
   wakelock:
     dependency: transitive
     description:

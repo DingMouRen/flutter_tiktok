@@ -25,7 +25,7 @@ class _UserItemGridWidgetState extends State<UserItemGridWidget> {
       },
       child: Stack(
           children: [
-            Image.asset(widget.gifUrl,fit: BoxFit.cover,),
+            Image.network(widget.gifUrl,fit: BoxFit.cover,),
             Positioned(
               left: 2,
               bottom: 2,

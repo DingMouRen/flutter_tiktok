@@ -129,7 +129,7 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin{
           icon: Icon(Icons.arrow_back_ios_rounded),
           color: Colors.white,
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
             SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
               statusBarColor: ColorRes.color_1,
               statusBarIconBrightness: Brightness.dark,

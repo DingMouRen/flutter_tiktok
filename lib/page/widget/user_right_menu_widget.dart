@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_tiktok/common/application.dart';
+import 'package:flutter_tiktok/common/router_manager.dart';
+import 'package:flutter_tiktok/controller/user_page_controller.dart';
+import 'package:flutter_tiktok/event/close_main_drawer_event.dart';
 import 'package:flutter_tiktok/res/colors.dart';
+import 'package:get/get.dart';
 
 class UserRightMenuWidget extends StatefulWidget {
 
@@ -10,6 +16,7 @@ class UserRightMenuWidget extends StatefulWidget {
 }
 
 class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
+  UserPageController _userPageController = Get.put(UserPageController());
   @override
   void initState() {
     super.initState();
@@ -72,14 +79,14 @@ class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
         iconUrl: 'assets/images/shop.png',
         title: '我的订单',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/wallet.png',
         title: '钱包',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       SizedBox(height: 10,),
@@ -92,21 +99,21 @@ class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
         iconUrl: 'assets/images/hollow_star.png',
         title: '我的收藏',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/sun.png',
         title: '我的动态',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/framer.png',
         title: '创作者服务中心',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       SizedBox(height: 10,),
@@ -119,34 +126,36 @@ class _UserRightMenuWidgetState extends State<UserRightMenuWidget> {
         iconUrl: 'assets/images/line_application.webp',
         title: '小程序',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/gongyi.webp',
         title: '抖音公益',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/rib.png',
         title: '未成年保护工具',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/service.png',
         title: '我的客服',
         onTap: (){
-
+          EasyLoading.showToast('功能待开发');
         },
       ),
       UserRightMenuItemWidget(
         iconUrl: 'assets/images/setting.png',
         title: '设置',
         onTap: (){
+          Application.eventBus.fire(CloseMainDrawerEvent());
+          Get.toNamed(Routers.setting);
 
         },
       ),

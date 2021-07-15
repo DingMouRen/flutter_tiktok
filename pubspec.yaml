@@ -42,6 +42,16 @@ dependencies:
   event_bus: ^2.0.0
   # 二维码
 #  qrscan: ^0.2.22
+  # loading
+  flutter_easyloading: ^3.0.0
+  # 图片选择
+  image_picker: ^0.6.7+22
+  # 获取视频缩略图
+  video_thumbnail: ^0.2.5
+  #高德地图定位插件
+#  amap_flutter_location: ^1.0.0
+  # 高德地图插件
+#  amap_flutter_map: ^1.0.0
 
 dev_dependencies:
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tiktok/model/response/feed_list_response.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
@@ -11,9 +12,9 @@ class VideoRightBarWidget extends StatefulWidget {
   final Function onClickComment;
   final Function onClickShare;
   final Function onClickHeader;
-  VideoModel videoModel;
   bool showFocusButton;
-  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.videoModel,this.showFocusButton,this.onClickHeader}) : super(key: key);
+  FeedListList video;
+  VideoRightBarWidget({Key key,this.onClickComment,this.onClickShare,this.showFocusButton,this.onClickHeader,this.video}) : super(key: key);
 
   @override
   _VideoRightBarWidgetState createState() {
@@ -51,6 +52,8 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
   }
   //头像
   _getHeader() {
+    String headerUrl = '';
+    if(widget.video != null) headerUrl = widget.video.user.portrait;
     return InkWell(
       onTap: (){
         widget.onClickHeader?.call();
@@ -67,7 +70,8 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
                 borderRadius: BorderRadius.circular(_widgetWidth/2),
                 border: Border.fromBorderSide(BorderSide(color: Colors.white,width: 2)),
                 image: DecorationImage(
-                  image: AssetImage(widget.videoModel.authorHeaderUrl)
+                  image: headerUrl == null?AssetImage('assets/images/person_holder.png'):NetworkImage(headerUrl),
+                  fit: BoxFit.cover
                 )
               ),
             ),
@@ -90,6 +94,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
   }
   //获取点赞按钮
   _getLikeButton() {
+    int likeCount = widget.video.likeCount;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -102,12 +107,13 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
             bubblesColor:const BubblesColor(dotPrimaryColor: ColorRes.color_3,dotSecondaryColor: ColorRes.color_3,dotThirdColor: ColorRes.color_3,dotLastColor: ColorRes.color_3,)
         ),
         SizedBox(height: 2,),
-        Text('188w',style: TextStyle(color: Colors.white),)
+        Text('$likeCount',style: TextStyle(color: Colors.white),)
       ],
     );
   }
   //获取评论按钮
   _getCommentButton() {
+    int commentCount = widget.video.commentCount;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -119,7 +125,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
           },
           icon: Image.asset('assets/images/comment.webp',),
         ),
-        Text('18w',style: TextStyle(color: Colors.white),)
+        Text('$commentCount',style: TextStyle(color: Colors.white),)
 
       ],
     );
@@ -127,6 +133,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
 
   //获取分享按钮
   _getShareButton() {
+    int shareCount = widget.video.shareCount;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -138,7 +145,7 @@ class _VideoRightBarWidgetState extends State<VideoRightBarWidget> {
           },
           icon: Image.asset('assets/images/share_button.webp',width: 35,height: 35,),
         ),
-        Text('18w',style: TextStyle(color: Colors.white),)
+        Text('$shareCount',style: TextStyle(color: Colors.white),)
 
       ],
     );

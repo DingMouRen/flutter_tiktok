@@ -3,15 +3,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_tiktok/model/response/feed_list_response.dart';
 import 'package:flutter_tiktok/util/constants.dart';
 import 'package:flutter_tiktok/util/screen_utils.dart';
 
 
 /// Rotating vinyl disk with notes go out from its bottom
 class VinylDisk extends StatefulWidget {
-  String imgUrl;
+  FeedListList video;
 
-  VinylDisk(this.imgUrl);
+  VinylDisk({this.video});
 
   @override
   _VinylDiskState createState() => _VinylDiskState();
@@ -172,7 +173,7 @@ class _VinylDiskState extends State<VinylDisk> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
-                  image: DecorationImage(image: AssetImage(widget.imgUrl)),
+                  image: DecorationImage(image: NetworkImage(widget.video.user.portrait),fit: BoxFit.cover),
                 ),
               ),),
             ),

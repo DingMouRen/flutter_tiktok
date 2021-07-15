@@ -14,4 +14,6 @@ class UserPageController extends GetxController{
   void toggleRightMenu(){
     showRightMenu.value = !showRightMenu.value;
   }
+
+
 }

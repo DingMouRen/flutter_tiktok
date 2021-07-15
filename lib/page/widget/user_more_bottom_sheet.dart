@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
+import 'package:flutter_tiktok/net/api.dart';
 import 'package:flutter_tiktok/res/colors.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class _UserMoreBottomSheetState extends State<UserMoreBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel user = _mainController.userModelCurrent.value;
+    UserModel user = loginUserModel;
     return Scaffold(
       body: Container(
         child: Column(
@@ -61,7 +62,7 @@ class _UserMoreBottomSheetState extends State<UserMoreBottomSheet> {
 
             InkWell(
               onTap: (){
-                Navigator.pop(context);
+                Get.back();
               },
               child: Container(
                   padding: EdgeInsets.only(top: 20,bottom: 20),

@@ -39,7 +39,7 @@ class _MyTikTokCodePageState extends State<MyTikTokCodePage> {
           icon: Icon(Icons.arrow_back_ios_rounded),
           color: Colors.white,
           onPressed: (){
-            Navigator.pop(context);
+            Get.back();
           },
         ),
       ),
@@ -74,7 +74,7 @@ class _MyTikTokCodePageState extends State<MyTikTokCodePage> {
               bottom: 20,
               child: InkWell(
                 onTap: (){
-                  Navigator.pop(context);
+                  Get.back();
                 },
                 child: Column(
                   children: [

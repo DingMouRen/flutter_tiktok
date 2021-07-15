@@ -1,12 +1,15 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/common/router_manager.dart';
+import 'package:flutter_tiktok/common/sp_keys.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
-import 'package:flutter_tiktok/event/stop_play.dart';
+import 'package:flutter_tiktok/event/stop_play_event.dart';
 import 'package:flutter_tiktok/res/colors.dart';
+import 'package:flutter_tiktok/util/sp_util.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 ///首页底部导航
@@ -83,8 +86,20 @@ class _MainPageBottomBarWidgetState extends State<MainPageBottomBarWidget>{
   _getAnimatedText(String barName,int index){
     return TextButton(
         onPressed: (){
-          mainPageScrollController.selectIndexBottomBarMainPage(index);
-          // setSystemStatusBarStyle(index);
+          if(index == 0){
+            mainPageScrollController.selectIndexBottomBarMainPage(index);
+          }else{
+            SPUtil.getString(SPKeys.token).then((text){
+              String token = text;
+              if(token != null && token.length > 0){
+                mainPageScrollController.selectIndexBottomBarMainPage(index);
+              }else{
+                Application.eventBus.fire(StopPlayEvent());
+                Get.toNamed(Routers.login);
+              }
+            });
+          }
+
         },
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.transparent),

@@ -1,4 +1,5 @@
 import 'package:flutter/rendering.dart';
+import 'package:flutter_tiktok/model/response/feed_list_response.dart';
 import 'package:flutter_tiktok/model/user_model.dart';
 import 'package:get/get.dart';
 ///用来控制首页滑动、存储当前播放视频的用户model数据
@@ -15,26 +16,11 @@ class MainPageScrollController extends GetxController{
   var videoViewHeight = 0.0.obs;
 
   //当前播放视频的用户model
-  var userModelCurrent = UserModel().obs;
+  var uidCuttent = 0.obs;
 
   //设置当前播放视频的用户model
-  void setCurrentUserOfVideo(UserModel userModel){
-    userModelCurrent.update((user) {
-      user.name = userModel.name;
-     user.headerBgImage = userModel.headerBgImage;
-     user.headerImg = userModel.headerImg;
-     user.douYinNumber = userModel.douYinNumber ;
-     user.introduction = userModel.introduction ;
-     user.male = userModel.male;
-     user.city = userModel.city;
-     user.likeTotalNumber = userModel.likeTotalNumber;
-     user.focusNumber = userModel.focusNumber;
-     user.fansNumber = userModel.fansNumber;
-     user.worksVideo = userModel.worksVideo ;
-     user.likeVideo = userModel.likeVideo ;
-     user.likeVideoGif = userModel.likeVideoGif;
-     user.worksVideoGif = userModel.worksVideoGif;
-    });
+  void setCurrentUserOfVideo(FeedListListUser userInfo){
+    uidCuttent.value = userInfo.uid;
   }
 
   //设置视频播放页视频的高度

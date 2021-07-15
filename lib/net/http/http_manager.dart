@@ -1,6 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_tiktok/net/http/interceptors/header_interceptor.dart';
 
 import 'base_response.dart';
 import '../http_constant.dart';
@@ -15,7 +17,7 @@ class HttpManager {
   static const int CONNECT_TIMEOUT = 30 * 1000;
   static const int RECEIVE_TIMEOUT = 30 * 1000;
 
-  Dio _dio;
+  Dio _dio,_dioUpload;
 
 
   ///单例对象
@@ -32,7 +34,19 @@ class HttpManager {
       );
       _dio = Dio(options);
       //添加拦截器
-      _dio.interceptors.add(LogInterceptors(requestHeader: true,requestBody: true));
+      _dio.interceptors.add(HeaderInterceptor());
+      _dio.interceptors.add(LogInterceptors(requestHeader: true,requestBody: true,responseHeader: true,responseBody: true));
+
+    }
+    //初始化操作
+    if (null == _dioUpload) {
+      BaseOptions options = BaseOptions(
+        connectTimeout: CONNECT_TIMEOUT,
+        receiveTimeout: RECEIVE_TIMEOUT,
+      );
+      _dioUpload = Dio(options);
+      //添加拦截器
+      _dioUpload.interceptors.add(LogInterceptors(requestHeader: true,requestBody: true,responseHeader: true,responseBody: true));
 
     }
   }
@@ -46,18 +60,21 @@ class HttpManager {
     return _instance;
   }
 
+
   ///get请求
   Future get(
       {@required String url,
       @required String cancelTokenTag,
       Map<String, dynamic> params,
-      Options options}) async {
+      Options options,
+      }) async {
     return await _requestHttp(
         url: url,
         method: HttpMethod.GET,
         cancelTokenTag: cancelTokenTag,
         params: params,
-        options: options);
+        options: options,
+    );
   }
 
   ///post请求
@@ -66,14 +83,35 @@ class HttpManager {
       @required String cancelTokenTag,
       Map<String, dynamic> params,
       data,
-      Options options}) async {
+      Options options,
+      }) async {
     return await _requestHttp(
         url: url,
         method: HttpMethod.POST,
         cancelTokenTag: cancelTokenTag,
         params: params,
         data: data,
-        options: options);
+        options: options,
+    );
+  }
+
+  ///put请求
+  Future put(
+      {@required String url,
+        @required String cancelTokenTag,
+        Map<String, dynamic> params,
+        data,
+        Options options,
+        int typeHttp
+      }) async {
+    return await _requestHttp(
+        url: url,
+        method: HttpMethod.PUT,
+        cancelTokenTag: cancelTokenTag,
+        params: params,
+        data: data,
+        options: options,
+    );
   }
 
   Future _requestHttp(
@@ -83,7 +121,8 @@ class HttpManager {
       Map<String, dynamic> params,
       data,
       Options options}) async {
-
+    //请求中loading
+    EasyLoading.show();
     //检查网络是否连接
     ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
@@ -106,20 +145,82 @@ class HttpManager {
       _cancelTokens[cancelTokenTag] = cancelToken;
     }
 
-    // try {
+    try {
       Response<Map<String, dynamic>> response = await _dio.request(url,
-              queryParameters: params,
-              data: data,
-              options: options,
-              cancelToken: cancelToken);
+          queryParameters: params,
+          data: data,
+          options: options,
+          cancelToken: cancelToken);
+      EasyLoading.dismiss();
+      if(null != response){
+        if(response.data['code'] == 0){
+          return BaseResponse.fromJson(response.data).data;
+        }else{
+          EasyLoading.showToast(response.data['message']);
+          return null;
+        }
+      }
 
-      return BaseResponse.fromJson(response.data).data;
-    // } on DioError catch(e,s) {
-    //   throw (HttpError.dioError(e));
-    // } catch(e,s){
-    // }
+     } catch(e,s){
+      EasyLoading.dismiss();
+      print(e);
+     }
 
   }
+
+
+  Future<bool> uploadFile(
+      {@required String url,
+        String method,
+        @required String cancelTokenTag,
+        Map<String, dynamic> params,
+        data,
+        Options options}) async {
+    //请求中loading
+    EasyLoading.show();
+    //检查网络是否连接
+    ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      throw (HttpError(HttpError.NETWORK_ERROR, "网络异常，请检查网络"));
+    }
+
+    //设置默认值
+    params = params ?? {};
+    method = method ?? 'GET';
+    options?.method = method;
+    options = options ??
+        Options(
+          method: method,
+        );
+    url = _restfulUrl(url, params);
+
+    CancelToken cancelToken;
+    if (cancelTokenTag != null) {
+      cancelToken = _cancelTokens[cancelTokenTag] == null ? CancelToken() : _cancelTokens[cancelTokenTag];
+      _cancelTokens[cancelTokenTag] = cancelToken;
+    }
+
+    try {
+      Response response = await _dioUpload.request(url,
+          queryParameters: params,
+          data: data,
+          options: options,
+          cancelToken: cancelToken);
+      EasyLoading.dismiss();
+      if(response.statusCode == 200){
+        return true;
+      }else{
+        return false;
+      }
+    } catch(e,s){
+      EasyLoading.dismiss();
+      print(e);
+    }
+
+  }
+
+
+
 
   ///restful处理
   String _restfulUrl(String url, Map<String, dynamic> params) {

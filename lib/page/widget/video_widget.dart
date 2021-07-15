@@ -1,9 +1,11 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_tiktok/common/application.dart';
 import 'package:flutter_tiktok/controller/main_page_scroll_controller.dart';
-import 'package:flutter_tiktok/event/stop_play.dart';
+import 'package:flutter_tiktok/event/stop_play_event.dart';
 import 'package:flutter_tiktok/model/comment_model.dart';
+import 'package:flutter_tiktok/model/response/feed_list_response.dart';
 import 'package:flutter_tiktok/model/video_model.dart';
 import 'package:flutter_tiktok/page/widget/video_bottom_bar_widget.dart';
 import 'package:flutter_tiktok/page/widget/video_comment_widget.dart';
@@ -22,11 +24,11 @@ import 'like_gesture_widget.dart';
 ///视频播放列表组件
 // ignore: must_be_immutable
 class VideoWidget extends StatefulWidget {
-  VideoModel videoModel;
   bool showFocusButton;
   double contentHeight;
   Function onClickHeader;
-  VideoWidget({Key key, @required this.videoModel,bool this.showFocusButton,this.contentHeight,this.onClickHeader}) : super(key: key);
+  FeedListList video;
+  VideoWidget({Key key, bool this.showFocusButton,this.contentHeight,this.onClickHeader,this.video}) : super(key: key);
 
   @override
   _VideoWidgetState createState() {
@@ -42,7 +44,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset(widget.videoModel.videoUrl);
+    _videoPlayerController = VideoPlayerController.network(widget.video.content.attachments[0].url);
     _videoPlayerController.initialize();
     _videoPlayerController.setLooping(true);
     _playOrPause();
@@ -50,7 +52,6 @@ class _VideoWidgetState extends State<VideoWidget> {
     Application.eventBus.on<StopPlayEvent>().listen((event) {
       _videoPlayerController.pause();
     });
-
   }
 
   @override
@@ -101,7 +102,7 @@ class _VideoWidgetState extends State<VideoWidget> {
               right: 10,
               bottom: 110,
               child: VideoRightBarWidget(
-                videoModel: widget.videoModel,
+                video: widget.video,
                 showFocusButton: widget.showFocusButton,
                 onClickComment: (){
                   showBottomComment();
@@ -116,11 +117,11 @@ class _VideoWidgetState extends State<VideoWidget> {
           Positioned(
               right: 2,
               bottom: 20,
-              child: VinylDisk(widget.videoModel.videoMusicImage)),
+              child: VinylDisk(video: widget.video,)),
           Positioned(
             left: 12,
             bottom: 20,
-            child: VideoBottomBarWidget(widget.videoModel),
+            child: VideoBottomBarWidget(video: widget.video,),
           )
 
 
@@ -173,16 +174,17 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   //展示评论
   void showBottomComment() {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true, //可滚动 解除showModalBottomSheet最大显示屏幕一半的限制
-        shape: RoundedRectangleBorder(borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),),
-        builder: (context){
-          return VideoCommentWidget(commentList:widget.videoModel.commentList);
-        });
+    EasyLoading.showToast('评论列表待开发');
+    // showModalBottomSheet(
+    //     context: context,
+    //     isScrollControlled: true, //可滚动 解除showModalBottomSheet最大显示屏幕一半的限制
+    //     shape: RoundedRectangleBorder(borderRadius: const BorderRadius.only(
+    //       topLeft: Radius.circular(10),
+    //       topRight: Radius.circular(10),
+    //     ),),
+    //     builder: (context){
+    //       return VideoCommentWidget(commentList:widget.videoModel.commentList);
+    //     });
   }
 
   //展示分享布局
